@@ -42,6 +42,9 @@ public class LocationHelper {
         Latitude = latitude;
     }
 
+    public LocationHelper(int idTimeMillis, float longitude, float latitude, String idUser, String gravita, String tipoSegnalazione) {
+    }
+
     public String getIndirizzo() {
         return indirizzo;
     }

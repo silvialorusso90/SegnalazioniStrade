@@ -1,45 +1,45 @@
 package com.example.segnalazionistrade.segnalazioni;
 public class LocationHelper {
     private int id;
-    private float Longitude;
-    private float Latitude;
-    private String idUser, gravita, tipoSegnalazione;
+    private float longitude;
+    private float latitude;
+    private String idUser, gravita, tipo;
     String indirizzo;
 
     public LocationHelper(int id, float longitude, float latitude, String idUser, String gravita,
-                          String tipoSegnalazione, String indirizzo) {
+                          String tipo, String indirizzo) {
         this.id = id;
-        Longitude = longitude;
-        Latitude = latitude;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.idUser = idUser;
         this.gravita = gravita;
-        this.tipoSegnalazione = tipoSegnalazione;
+        this.tipo = tipo;
         this.indirizzo = indirizzo;
     }
 
     public LocationHelper() {
     }
 
-    public LocationHelper(int id, float longitude, float latitude, String idUser, String gravita, String tipoSegnalazione) {
+    public LocationHelper(int id, float longitude, float latitude, String idUser, String gravita, String tipo) {
         this.id = id;
-        Longitude = longitude;
-        Latitude = latitude;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.idUser = idUser;
         this.gravita = gravita;
-        this.tipoSegnalazione = tipoSegnalazione;
+        this.tipo = tipo;
     }
 
     public LocationHelper(float longitude, float latitude) {
-        Longitude = longitude;
-        Latitude = latitude;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
-    public String getTipoSegnalazione() {
-        return tipoSegnalazione;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoSegnalazione(String tipoSegnalazione) {
-        this.tipoSegnalazione = tipoSegnalazione;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getIdUser() {
@@ -67,19 +67,19 @@ public class LocationHelper {
     }
 
     public float getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
     public void setLongitude(float longitude) {
-        Longitude = longitude;
+        this.longitude = longitude;
     }
 
     public float getLatitude() {
-        return Latitude;
+        return latitude;
     }
 
     public void setLatitude(float latitude) {
-        Latitude = latitude;
+        this.latitude = latitude;
     }
 
     public String getGravita() {

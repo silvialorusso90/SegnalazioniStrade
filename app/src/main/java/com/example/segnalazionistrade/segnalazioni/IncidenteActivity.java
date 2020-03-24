@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.segnalazionistrade.MainActivity;
 import com.example.segnalazionistrade.R;
@@ -35,7 +34,7 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
     Spinner spinner;
     Button btn;
-    String gravita, sLatitude, sLongitude, indirizzo, idUser, tipoSegnalazione;
+    String gravita, sLatitude, sLongitude, indirizzo, idUser, tipo;
     TextView lat, lon;
     float latitude, longitude;
     int idTimeMillis = (int) (System.currentTimeMillis() / 1000);
@@ -60,7 +59,7 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
         idUser = currentUser.getUid();
 
-        tipoSegnalazione = "incidente";
+        tipo = "incidente";
 
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(getApplicationContext(),  R.array.gravita_incidente, android.R.layout.simple_spinner_dropdown_item);
         //creazione dell'adapter per lo spinner
@@ -180,7 +179,7 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
     public void inviaSegnalazione(View view) {
         indirizzo = convertiIndirizzo(latitude, longitude);
-        LocationHelper helper = new LocationHelper(idTimeMillis, longitude, latitude, idUser, gravita, tipoSegnalazione, indirizzo);
+        LocationHelper helper = new LocationHelper(idTimeMillis, longitude, latitude, idUser, gravita, tipo, indirizzo);
         if (helper.getGravita().isEmpty())
           Toast.makeText(this, "selezionare la gravità", Toast.LENGTH_SHORT).show();
         else {
