@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "888912844647",
+    "firebase_url": "https://segnalazionistrade-9de76.firebaseio.com",
+    "project_id": "segnalazionistrade-9de76",
+    "storage_bucket": "segnalazionistrade-9de76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888912844647:android:d5a3b11e046e2c477281c2",
+        "android_client_info": {
+          "package_name": "com.example.segnalazionistrade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888912844647-ot5vr31nas120jgv69pf33ee1gdr5s98.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1g6dukg6G-4dzEKjMChOukWV6q0RI9WE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888912844647-ot5vr31nas120jgv69pf33ee1gdr5s98.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
