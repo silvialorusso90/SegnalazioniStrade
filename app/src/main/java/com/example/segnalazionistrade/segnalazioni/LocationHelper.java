@@ -1,10 +1,9 @@
 package com.example.segnalazionistrade.segnalazioni;
 public class LocationHelper {
+
     private int id;
-    private float longitude;
-    private float latitude;
-    private String idUser, gravita, tipo;
-    String indirizzo;
+    private float longitude, latitude;
+    private String idUser, gravita, tipo, indirizzo;
 
     public LocationHelper(int id, float longitude, float latitude, String idUser, String gravita,
                           String tipo, String indirizzo) {
@@ -20,18 +19,13 @@ public class LocationHelper {
     public LocationHelper() {
     }
 
-    public LocationHelper(int id, float longitude, float latitude, String idUser, String gravita, String tipo) {
-        this.id = id;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.idUser = idUser;
-        this.gravita = gravita;
-        this.tipo = tipo;
-    }
 
     public LocationHelper(float longitude, float latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
+    }
+
+    public LocationHelper(int idTimeMillis, float longitude, float latitude, String idUser) {
     }
 
     public String getTipo() {

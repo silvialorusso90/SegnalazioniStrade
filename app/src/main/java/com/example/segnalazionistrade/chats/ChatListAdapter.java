@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.segnalazionistrade.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -126,7 +127,9 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
 
         //Riempiamo il ViewHolder
         //holder.autore.setText(msg.getAuthor());
-        holder.messaggio.setText(msg.getAuthor() + " " + msg.getDate() + " " + msg.getHour() + "\n" + msg.getMessage());
+        String testo = msg.getAuthor() + " " + msg.getDate() + " " + msg.getHour()
+                + "\n" + msg.getMessage();
+        holder.messaggio.setText(testo);
 
         boolean sonoIo = msg.getAuthor().equals(mDisplayName);
         setChatItemStyle(sonoIo, holder);

@@ -29,8 +29,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.segnalazionistrade.LocationHelper;
 import com.example.segnalazionistrade.R;
+import com.example.segnalazionistrade.segnalazioni.LocationHelper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -239,6 +239,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     myRef.child(String.valueOf(idTimeMillis)).child("longitude").setValue(longitude);
                     myRef.child(String.valueOf(idTimeMillis)).child("indirizzo").setValue(locationAddress);
 
+
+
                     myRef.child(String.valueOf(idTimeMillis)).child("idUser").setValue(currentUser.getUid());
                     tipoSegnalazione = voiceListen;
                     if((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))){
@@ -292,20 +294,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 longitude = (float) location.getLongitude();
 
                 locationAddress = getLcationAddress();
-                //crea la stringa indirizzo
-                /*try {
-                    Geocoder geocoder = new Geocoder(getContext());
-                    List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
-                    Address address = list.get(0);
-                    StringBuffer str = new StringBuffer();
-                    str.append(list.get(0).getAddressLine(0) + " ");
-                    locationAddress = str.toString();
-                    //Toast.makeText(getContext(), indirizzo, Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                 */
 
                 //salva l'indirizzoo testuale
                 mDatabase.getReference("Indirizzo corrente").setValue(locationAddress)
@@ -337,20 +325,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posizioneutente, zoom));
 
             }
-
-                /*try {
-                    Geocoder geocoder = new Geocoder(getContext());
-                    List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
-                    Address address = list.get(0);
-                    StringBuffer str = new StringBuffer();
-                    str.append(list.get(0).getAddressLine(0) + " ");
-                    indirizzo = str.toString();
-                    Toast.makeText(getContext(), indirizzo, Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                 */
 
 
             @Override

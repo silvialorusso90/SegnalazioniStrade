@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.segnalazionistrade.authentication.LoginActivity;
 import com.example.segnalazionistrade.segnalazioni.SegnalationActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -58,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
         myTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
         myViewPager.setAdapter(myTabsAccessorAdapter);
 
+
         myTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         myTabLayout.setupWithViewPager(myViewPager);
+        myViewPager.setCurrentItem(1);
     }
 
     @Override

@@ -61,7 +61,8 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
         tipo = "incidente";
 
-        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(getApplicationContext(),  R.array.gravita_incidente, android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                R.array.gravita_incidente, android.R.layout.simple_spinner_dropdown_item);
         //creazione dell'adapter per lo spinner
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -138,20 +139,7 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
     }
 
-    private String convertiIndirizzo(float latitude, float longitude) {
-        String indirizzo = "";
-        try {
-            Geocoder geocoder = new Geocoder(this);
-            List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
-            Address address = list.get(0);
-            StringBuffer str = new StringBuffer();
-            str.append(list.get(0).getAddressLine(0) + " ");
-            indirizzo = str.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return indirizzo;
-    }
+
 
 
     private void initUI() {
@@ -178,7 +166,7 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
 
     public void inviaSegnalazione(View view) {
-        indirizzo = convertiIndirizzo(latitude, longitude);
+        //indirizzo = convertiIndirizzo(latitude, longitude);
         LocationHelper helper = new LocationHelper(idTimeMillis, longitude, latitude, idUser, gravita, tipo, indirizzo);
         if (helper.getGravita().isEmpty())
           Toast.makeText(this, "selezionare la gravità", Toast.LENGTH_SHORT).show();
@@ -193,6 +181,20 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
     }
 
+    private String convertiIndirizzo(float latitude, float longitude) {
+        String indirizzo = "";
+        try {
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
+            Address address = list.get(0);
+            StringBuffer str = new StringBuffer();
+            str.append(list.get(0).getAddressLine(0) + " ");
+            indirizzo = str.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return indirizzo;
+    }
 
 
 }

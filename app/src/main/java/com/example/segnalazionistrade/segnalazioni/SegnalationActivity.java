@@ -1,19 +1,20 @@
 package com.example.segnalazionistrade.segnalazioni;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.Toolbar;
 
 import com.example.segnalazionistrade.R;
-import com.example.segnalazionistrade.chats.SegnalationAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SegnalationActivity extends AppCompatActivity {
+
+    private Toolbar mToolbar;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
@@ -26,16 +27,31 @@ public class SegnalationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_segnalation);
 
-        mAuth = FirebaseAuth.getInstance();
+        mToolbar = findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Le mie segnalazioni");
 
-        //Riferimento alla locazione del database generale
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        rvSegnalation = (RecyclerView) findViewById(R.id.rv_segnalazione);
+
+        mAuth = FirebaseAuth.getInstance();
 
         //Riferimento alla RecyclerView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvSegnalation.setLayoutManager(linearLayoutManager);
 
+        //Riferimento alla locazione del database generale
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("Segnalazioni");
+
+        segnalationAdapter = new SegnalationAdapter(this, mDatabaseReference,
+                mAuth.getCurrentUser().getEmail());
+
        // segnalationAdapter = new SegnalationAdapter(this, mDatabaseReference);
         rvSegnalation.setAdapter(segnalationAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        segnalationAdapter.clean();
     }
 }
