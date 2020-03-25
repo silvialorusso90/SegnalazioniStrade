@@ -33,11 +33,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".segnalazioni.SegnalationActivity" />
+        <activity android:name=".segnalazioni.SegnalationActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".ProfiloActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".InfoActivity" />
+        <activity android:name=".InfoActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".segnalazioni.IncidenteActivity" />
         <activity android:name=".authentication.RegisterActivity" />
         <activity android:name=".MainActivity" />

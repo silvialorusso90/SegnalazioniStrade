@@ -49,12 +49,16 @@ public class ProfiloActivity extends AppCompatActivity {
     private StorageReference profileImageRef;
     //private ProgressDialog loadingBar;
 
-    private Toolbar SettingsToolBar;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo);
+
+        mToolbar = findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Profilo");
 
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
@@ -82,11 +86,7 @@ public class ProfiloActivity extends AppCompatActivity {
         mProfilePhoto = (CircleImageView) findViewById(R.id.set_profile_image);
         mPhotoModyfy = (Button) findViewById(R.id.btnSettings);
 
-        SettingsToolBar = (Toolbar) findViewById(R.id.settings_toolbar);
-        setSupportActionBar(SettingsToolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setTitle("Account Settings");
+
     }
 
     private void retrieveUserInfo() {

@@ -405,6 +405,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.getMessage();
+        }
         return stringLocation;
     }
 
