@@ -170,13 +170,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     String key = child.getKey();
                     LocationHelper helper = child.getValue(LocationHelper.class);
                     LatLng incidente = new LatLng(helper.getLatitude(), helper.getLongitude());
-                    if (helper.getGravita().equals("Lieve"))
+                    if (helper.getGravita() == "Lieve")
                         mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
                                 helper.getGravita()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
-                    else if(helper.getGravita().equals("Moderata"))
+                    else if(helper.getGravita() == "Moderata")
                         mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
                                 helper.getGravita()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                    else if(helper.getGravita().equals("Grave"))
+                    else if(helper.getGravita() == "Grave")
                         mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
                                 helper.getGravita()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                     else

@@ -123,47 +123,21 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
         String sid;
         sid = snapshot.child("idUser").getValue(String.class);
 
-        if (idUser.equals(sid)){
+        //if (idUser.equals(sid)){
             stipo = snapshot.child("tipo").getValue(String.class);
             sgravita = snapshot.child("gravita").getValue(String.class);
-            slat = snapshot.child("latitude").getValue(double.class);
-            slong = snapshot.child("longitude").getValue(double.class);
+            //slat = snapshot.child("latitude").getValue(double.class);
+            //slong = snapshot.child("longitude").getValue(double.class);
             //sindirizzo = getLcationAddress(slat, slong);
             sindirizzo = snapshot.child("indirizzo").getValue(String.class);
-
-
 
             holder.tipo.setText(stipo);
             holder.gravita.setText(sgravita);
             holder.indirizzo.setText(sindirizzo);
-        }
-
-
-
-
-
-
+        //}
 
 
     }
-
-    /*private String getLcationAddress(double slat, double slong) {
-        String stringLocation = "";
-        try {
-            Geocoder geocoder = new Geocoder(mActivity);
-            List<Address> list = geocoder.getFromLocation(slat, slong, 1);
-            Address address = list.get(0);
-            StringBuffer str = new StringBuffer();
-            str.append(list.get(0).getAddressLine(0) + " ");
-            stringLocation = str.toString();
-            //Toast.makeText(getContext(), indirizzo, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return stringLocation;
-    }
-
-     */
 
     @Override
     public int getItemCount() {
