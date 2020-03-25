@@ -37,8 +37,11 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
     private ChildEventListener mListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            mDataSnapshot.add(dataSnapshot);
-            notifyDataSetChanged();
+            if (dataSnapshot.child("idUser").getValue().equals(currentUser.getUid())){
+                mDataSnapshot.add(dataSnapshot);
+                notifyDataSetChanged();
+            }
+
 
         }
 
@@ -120,8 +123,8 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
         double slat, slong;
         //dal database riceviamo il vettore
         DataSnapshot snapshot = mDataSnapshot.get(position);
-        String sid;
-        sid = snapshot.child("idUser").getValue(String.class);
+        //String sid;
+        //sid = snapshot.child("idUser").getValue(String.class);
 
         //if (idUser.equals(sid)){
             stipo = snapshot.child("tipo").getValue(String.class);

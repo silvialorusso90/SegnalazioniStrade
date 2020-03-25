@@ -49,7 +49,7 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0: return "Maps";
 
-            case 1: return "Chats";
+            case 1: return "Chat";
 
             //case 2: return "Contacts";
 

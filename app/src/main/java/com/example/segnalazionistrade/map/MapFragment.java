@@ -36,14 +36,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -70,7 +73,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     LocationManager locationManager;
     LocationListener locationListener;
     float latitude, longitude;
-    private int zoom = 16;
+    private int zoom = 15;
 
     ImageButton mVoicebtn;
     TextToSpeech textToSpeach;
@@ -114,7 +117,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         idUser = currentUser.getUid();
 
         mDatabase = FirebaseDatabase.getInstance();
-        myRef = mDatabase.getReference();
+        myRef = mDatabase.getReference("Segnalazioni");
 
         mVoicebtn = mView.findViewById(R.id.voiceBtn);
 
@@ -162,38 +165,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot child : dataSnapshot.child("Segnalazioni").getChildren()) {
-                    String key = child.getKey();
-                    LocationHelper helper = child.getValue(LocationHelper.class);
-                    LatLng incidente = new LatLng(helper.getLatitude(), helper.getLongitude());
-                    if (helper.getGravita() == "Lieve")
-                        mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
-                                helper.getGravita()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
-                    else if(helper.getGravita() == "Moderata")
-                        mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
-                                helper.getGravita()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                    else if(helper.getGravita() == "Grave")
-                        mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
-                                helper.getGravita()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-                    else
-                        mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
-                                helper.getGravita()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-
-
-
-                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.incidente);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         return mView;
     }
@@ -231,10 +203,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     //set to textview
                     voiceListen = result.get(0);
 
-                    LocationHelper helper = new LocationHelper(idTimeMillis, longitude, latitude, idUser);
+                    LocationHelper helper = new LocationHelper(idTimeMillis, latitude, longitude, idUser);
                     myRef = mDatabase.getReference("Segnalazioni");
 
-                    myRef.child(String.valueOf(idTimeMillis)).child("id").setValue(helper.getId());
+                    myRef.child(String.valueOf(idTimeMillis)).child("id").setValue(idTimeMillis);
                     myRef.child(String.valueOf(idTimeMillis)).child("latitude").setValue(latitude);
                     myRef.child(String.valueOf(idTimeMillis)).child("longitude").setValue(longitude);
                     myRef.child(String.valueOf(idTimeMillis)).child("indirizzo").setValue(locationAddress);
@@ -246,15 +218,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     if((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))){
 
                         myRef.child(String.valueOf(idTimeMillis)).child("tipo").setValue(tipoSegnalazione);
-                        textToSpeach.speak("Inserisci la gravità: bassa, media, alta", TextToSpeech.QUEUE_FLUSH, null);
+                        textToSpeach.speak("Inserisci la gravità: lieve, moderata, alta",
+                                TextToSpeech.QUEUE_FLUSH, null);
 
                         mVoicebtn.performClick();
                     }
                     gravitaSegnalazione = voiceListen;
                     if (((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) &&
+                            (gravitaSegnalazione.equals("Lieve")) || (gravitaSegnalazione.equals("lieve"))) {
+                        myRef.child(String.valueOf(idTimeMillis)).child("gravita").setValue(gravitaSegnalazione);
+                        textToSpeach.speak("hai detto lieve, confermi?", TextToSpeech.QUEUE_FLUSH, null);
+                        mVoicebtn.performClick();
+
+                    }
+                    if (((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) &&
                             (gravitaSegnalazione.equals("Moderata")) || (gravitaSegnalazione.equals("moderata"))) {
                         myRef.child(String.valueOf(idTimeMillis)).child("gravita").setValue(gravitaSegnalazione);
-                        textToSpeach.speak("hai detto media, confermi?", TextToSpeech.QUEUE_FLUSH, null);
+                        textToSpeach.speak("hai detto moderata, confermi?", TextToSpeech.QUEUE_FLUSH, null);
                         mVoicebtn.performClick();
 
                     }
@@ -266,7 +246,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     }
                     confermaSegnalazione = voiceListen;
                     if ((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente")) &&
-                            (gravitaSegnalazione.equals("Moderata")) || (gravitaSegnalazione.equals("moderata")) &&
+                            (gravitaSegnalazione.equals("Lieve")) || (gravitaSegnalazione.equals("lieve")) ||
+                            (gravitaSegnalazione.equals("Moderata")) || (gravitaSegnalazione.equals("moderata"))
+                            || (gravitaSegnalazione.equals("Grave")) || (gravitaSegnalazione.equals("grave")) &&
                             (confermaSegnalazione.equals("Ok")) || (confermaSegnalazione.equals("ok"))) {
                         textToSpeach.speak("segnalazione inviata", TextToSpeech.QUEUE_FLUSH, null);
 
@@ -285,7 +267,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
         //mMap.setMyLocationEnabled(true);
         MapsInitializer.initialize(Objects.requireNonNull(getContext()));
-        locationManager = (LocationManager) Objects.requireNonNull(getActivity()).getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) Objects.requireNonNull(getActivity())
+                .getSystemService(Context.LOCATION_SERVICE);
+
 
         locationListener = new LocationListener() {
             @Override
@@ -304,7 +288,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         });
 
 
-                LocationHelper helper = new LocationHelper(latitude, longitude);
+                LocationHelper helper = new LocationHelper(longitude, latitude);
 
                 //salva la posizione coorrente
                 mDatabase.getReference("Current Location")
@@ -323,6 +307,32 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 mMap.clear();
                 mMap.addMarker(new MarkerOptions().position(posizioneutente).title("Posizione utente"));
                 //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posizioneutente, zoom));
+
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            String key = child.getKey();
+                            LocationHelper helper = child.getValue(LocationHelper.class);
+
+
+                            LatLng incidente = new LatLng(helper.getLatitude(), helper.getLongitude());
+                            mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
+                                        helper.getGravita()).icon(BitmapDescriptorFactory
+                                        .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
+
+                            //.icon(BitmapDescriptorFactory.fromResource(R.drawable.incidente);
+                        }
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
             }
 
