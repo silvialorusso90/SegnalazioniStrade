@@ -1,4 +1,4 @@
-package com.example.segnalazionistrade.map;
+package com.example.segnalazionistrade.mappa;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

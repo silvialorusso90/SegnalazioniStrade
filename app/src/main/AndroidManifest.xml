@@ -32,7 +32,13 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <activity android:name=".autenticazione.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".segnalazioni.SegnalationActivity"
             android:parentActivityName=".MainActivity"/>
         <activity
@@ -41,17 +47,9 @@
         <activity android:name=".InfoActivity"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".segnalazioni.IncidenteActivity" />
-        <activity android:name=".authentication.RegisterActivity" />
+        <activity android:name=".autenticazione.RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".authentication.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
     </application>
 

@@ -1,4 +1,4 @@
-package com.example.segnalazionistrade.map;
+package com.example.segnalazionistrade.mappa;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -36,17 +36,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -161,7 +158,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mVoicebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                speach();
+                speak();
             }
         });
 
@@ -170,12 +167,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return mView;
     }
 
-    private void speach() {
+    private void speak() {
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ITALIAN);
         //i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Dimmi");
-
 
         //start intent
         try {
@@ -210,7 +206,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     myRef.child(String.valueOf(idTimeMillis)).child("latitude").setValue(latitude);
                     myRef.child(String.valueOf(idTimeMillis)).child("longitude").setValue(longitude);
                     myRef.child(String.valueOf(idTimeMillis)).child("indirizzo").setValue(locationAddress);
-
 
 
                     myRef.child(String.valueOf(idTimeMillis)).child("idUser").setValue(currentUser.getUid());
@@ -265,7 +260,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        //mMap.setMyLocationEnabled(true);
         MapsInitializer.initialize(Objects.requireNonNull(getContext()));
         locationManager = (LocationManager) Objects.requireNonNull(getActivity())
                 .getSystemService(Context.LOCATION_SERVICE);
@@ -366,7 +360,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
             else {
                 //abbiamo già i permessi
-                //googleMap.setMyLocationEnabled(true);
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
                         0, locationListener);
 
@@ -401,7 +394,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             StringBuffer str = new StringBuffer();
             str.append(list.get(0).getAddressLine(0) + " ");
             stringLocation = str.toString();
-            //Toast.makeText(getContext(), indirizzo, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,4 +1,4 @@
-package com.example.segnalazionistrade.chats;
+package com.example.segnalazionistrade.chat;
 
 public class Message {
 

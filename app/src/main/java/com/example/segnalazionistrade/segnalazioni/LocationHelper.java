@@ -5,7 +5,7 @@ public class LocationHelper {
     private float longitude, latitude;
     private String idUser, gravita, tipo, indirizzo;
 
-    public LocationHelper(int id, float longitude, float latitude, String idUser, String gravita,
+    LocationHelper(int id, float longitude, float latitude, String idUser, String gravita,
                           String tipo, String indirizzo) {
         this.id = id;
         this.longitude = longitude;
@@ -16,7 +16,7 @@ public class LocationHelper {
         this.indirizzo = indirizzo;
     }
 
-    public LocationHelper() {
+    LocationHelper() {
     }
 
 

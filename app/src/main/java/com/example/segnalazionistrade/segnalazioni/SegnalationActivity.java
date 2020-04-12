@@ -30,6 +30,7 @@ public class SegnalationActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Le mie segnalazioni");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rvSegnalation = (RecyclerView) findViewById(R.id.rv_segnalazione);
 

@@ -1,4 +1,4 @@
-package com.example.segnalazionistrade.authentication;
+package com.example.segnalazionistrade.autenticazione;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,18 +20,19 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "LoginActivity";
+
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
     EditText mEmail;
     EditText mPassword;
 
-    private static final String TAG = "LoginActivity";
-
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+
+        // controlla se c'è un utente loggato
         currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }
@@ -41,11 +42,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        initFirebase();
+        initUI();
+    }
+
+    private void initFirebase() {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-
-        initUI();
-
     }
 
     private void initUI() {
@@ -84,10 +87,10 @@ public class LoginActivity extends AppCompatActivity {
         String passwordUser = mPassword.getText().toString();
 
         if(!emailCorrect(emailUser)){
-            Toast.makeText(this,"Il nome deve contenere almeno 3 lettere", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.lunghezza_nome, Toast.LENGTH_SHORT).show();
         }
         else if(!passwordCorrect(passwordUser)){
-            Toast.makeText(this,"la password deve contenere 8 caratteri", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,R.string.lunghezza_password, Toast.LENGTH_SHORT).show();
         }
         else {
             loginUser(emailUser, passwordUser);
@@ -102,39 +105,35 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean emailCorrect(String emailUser) {
-        if((emailUser.length() > 7) && (emailUser.contains("@")))
+        if((emailUser.length() > 7) && (emailUser.contains("@")) && (emailUser.contains(".")))
             return true;
         else
             return false;
     }
 
     private void loginUser(String emailUser, String passwordUser) {
-        mAuth.signInWithEmailAndPassword(emailUser, passwordUser)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            SendUserToMainActivity();
-                            //FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+        mAuth.signInWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
-                    }
-                });
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // il login ha avuto successo
+                    Log.d(TAG, "signInWithEmail:success");
+                    SendUserToMainActivity();
+                } else {
+                    // il login è fallito
+                    Toast.makeText(LoginActivity.this, R.string.login_fallito,
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
     }
 
     public void btnRegisterClick(View view) {
         Log.d("LoginActivity", "Registrati Click");
-
         SendUserToRegisterActivity();
-
     }
 
 }

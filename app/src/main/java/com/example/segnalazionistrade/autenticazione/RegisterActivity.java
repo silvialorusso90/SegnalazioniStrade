@@ -1,10 +1,9 @@
-package com.example.segnalazionistrade.authentication;
+package com.example.segnalazionistrade.autenticazione;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,10 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
 
-    private ProgressDialog loadingBar;
     private EditText mName, mSurname, mEmail, mPassword, mPasswordConfirm;
-    TextView txtLogin;
-    private Button mBtnRegister;
     private String name, surname, email, password;
 
     @Override
@@ -41,10 +37,13 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        initFirebase();
+        initUI();
+    }
+
+    private void initFirebase() {
         mAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-
-        initUI();
     }
 
     private void initUI() {
@@ -53,8 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
         mEmail = (EditText)findViewById(R.id.etRegEmail);
         mPassword = (EditText)findViewById(R.id.etRegPassword);
         mPasswordConfirm = (EditText)findViewById(R.id.etRegPasswordConfirm);
-        mBtnRegister = (Button) findViewById(R.id.btnRegister);
-        txtLogin = (TextView) findViewById(R.id.txtLogin);
+        Button mBtnRegister = (Button) findViewById(R.id.btnRegister);
+        TextView txtLogin = (TextView) findViewById(R.id.txtLogin);
     }
 
     public void clickRegister(View view) {
@@ -65,16 +64,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         Log.d("Reg", "Button Registrati clicked");
         if(!nameCorrect(name)){
-            Toast.makeText(this,"Il nome deve contenere almeno 3 lettere", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.lunghezza_nome, Toast.LENGTH_SHORT).show();
         }
         else if(!surnameCorrect(surname)){
-            Toast.makeText(this,"Il cognome deve contenere almeno 4 lettere", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.lunghezza_cognome, Toast.LENGTH_SHORT).show();
         }
         else if(!emailCorrect(email)){
-            Toast.makeText(this,"L'email deve contenere la @e il .", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.caratteri_email, Toast.LENGTH_SHORT).show();
         }
         else if(!pwCorrect(password)){
-            Toast.makeText(this,"La password deve avere almeno 8 caratteri", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.lunghezza_password, Toast.LENGTH_SHORT).show();
         }
         else {
             createFirebaseUser(email, password, name, surname);
@@ -96,13 +95,11 @@ public class RegisterActivity extends AppCompatActivity {
                     mDatabaseReference.child("Utenti").child(currentUserID).setValue(user);
                     setName(fullName);
                     SendUserToMainActivity();
-                    //loadingBar.dismiss();
 
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("Reg", "createUserWithEmail:failure", task.getException());
-                    showDialog("Errore", "Errore nella registrazione", android.R.drawable.ic_dialog_alert);
-                    //loadingBar.dismiss();
+                    showDialog(getString(R.string.errore), getString(R.string.errore_registrazione), android.R.drawable.ic_dialog_alert);
                 }
             }
         });
@@ -117,16 +114,18 @@ public class RegisterActivity extends AppCompatActivity {
                 .setDisplayName(fullName)
                 .build();
 
-        firebaseUser.updateProfile(changeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Log.i("setNome", "Nome Caricato con successo");
-                }else{
-                    Log.i("setNome", "Errore nel caricamento del nome");
+        if (firebaseUser != null) {
+            firebaseUser.updateProfile(changeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Log.i("setNome", "Nome Caricato con successo");
+                    }else{
+                        Log.i("setNome", "Errore nel caricamento del nome");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void clickLogin(View view) {
@@ -163,7 +162,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     //l'email deve contenere il carattere @
     private boolean emailCorrect(String email){
-        return email.contains("@");
+        if (email.contains("@") && email.contains("."))
+            return true;
+        else
+            return false;
     }
 
     //la password deve avere 8 lettere

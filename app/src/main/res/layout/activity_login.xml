@@ -5,12 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
-    tools:context=".authentication.LoginActivity">
-
-    <!--<include
-        android:id="@+id/main_page_toolbar"
-        layout="@layout/app_bar_layout">
-    </include>-->
+    tools:context=".autenticazione.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -64,7 +59,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
         </LinearLayout>
@@ -119,7 +114,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:maxLines="1" />
         </LinearLayout>
@@ -150,7 +145,7 @@
         android:layout_marginEnd="64dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="btnLoginClick"
-        android:text="LOGIN"
+        android:text="@string/login_maiuscolo"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +162,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="Non sei registrato?"
+        android:text="@string/non_sei_registrato"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -185,7 +180,7 @@
         android:layout_marginBottom="24dp"
         android:clickable="true"
         android:onClick="btnRegisterClick"
-        android:text="Registrati"
+        android:text="@string/registrati"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         android:textStyle="bold"

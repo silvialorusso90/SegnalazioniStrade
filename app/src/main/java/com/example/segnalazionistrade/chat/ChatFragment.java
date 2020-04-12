@@ -1,4 +1,4 @@
-package com.example.segnalazionistrade.chats;
+package com.example.segnalazionistrade.chat;
 
 import android.os.Bundle;
 
@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class ChatsFragment extends Fragment {
+public class ChatFragment extends Fragment {
 
         private ChatsViewModel chatsViewModel;
 

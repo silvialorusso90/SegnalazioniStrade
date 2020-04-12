@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
-    tools:context=".authentication.RegisterActivity">
+    tools:context=".autenticazione.RegisterActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="Registrati"
+        android:text="@string/registrati"
         android:textColor="@android:color/white"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/txtReg"
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
@@ -55,7 +55,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="Nome"
+            android:hint="@string/nome"
             android:maxLines="1" />
 
 
@@ -112,7 +112,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="Cognome"
+            android:hint="@string/cognome"
             android:maxLines="1" />
 
     </LinearLayout>
@@ -168,7 +168,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:maxLines="1" />
 
@@ -225,7 +225,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:maxLines="1" />
 
@@ -282,7 +282,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="Conferma Password"
+            android:hint="@string/conferma_password"
             android:inputType="textPassword"
             android:maxLines="1" />
 
@@ -322,7 +322,7 @@
         android:layout_marginEnd="64dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="clickRegister"
-        android:text="REGISTRATI"
+        android:text="@string/registrati_maiuscolo"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -339,7 +339,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="Già registrato?"
+        android:text="@string/gia_registrato"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -356,7 +356,7 @@
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="24dp"
         android:clickable="true"
-        android:text="Login"
+        android:text="@string/login"
         android:onClick="clickLogin"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -365,7 +365,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/btnRegister"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:focusable="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,4 +4,27 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+    <string name="registrati">Registrati</string>
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="conferma_password">Conferma Password</string>
+    <string name="registrati_maiuscolo">REGISTRATI</string>
+    <string name="gia_registrato">Già registrato?</string>
+    <string name="login">Login</string>
+    <string name="login_maiuscolo">LOGIN</string>
+    <string name="non_sei_registrato">Non sei registrato?</string>
+    <string name="info">Info</string>
+    <string name="profilo">Profilo</string>
+    <string name="segnalazioni">Segnalazioni</string>
+    <string name="logout">Logout</string>
+    <string name="utente">\Utente: \</string>
+    <string name="lunghezza_nome">Il nome deve contenere almeno 3 lettere</string>
+    <string name="lunghezza_cognome">Il cognome deve contenere almeno 4 lettere</string>
+    <string name="caratteri_email">L\'email deve contenere la @ e il .</string>
+    <string name="lunghezza_password">La password deve avere almeno 8 caratteri</string>
+    <string name="errore">Errore</string>
+    <string name="errore_registrazione">Errore nella registrazione</string>
+    <string name="login_fallito">Login fallito</string>
 </resources>

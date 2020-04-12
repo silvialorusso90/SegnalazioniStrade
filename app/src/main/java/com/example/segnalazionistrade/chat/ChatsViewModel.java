@@ -1,4 +1,4 @@
-package com.example.segnalazionistrade.chats;
+package com.example.segnalazionistrade.chat;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

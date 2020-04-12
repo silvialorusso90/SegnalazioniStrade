@@ -3,7 +3,6 @@ package com.example.segnalazionistrade;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -11,29 +10,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-import com.example.segnalazionistrade.authentication.LoginActivity;
+import com.example.segnalazionistrade.autenticazione.LoginActivity;
 import com.example.segnalazionistrade.segnalazioni.SegnalationActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
-    private ViewPager myViewPager;
-    private TabLayout myTabLayout;
-    private TabsAccessorAdapter myTabsAccessorAdapter;
-
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
-
     DatabaseReference mDatabaseReference;
 
     @Override
@@ -47,22 +37,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        initFirebase();
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        initUI();
 
-        mToolbar = findViewById(R.id.main_page_toolbar);
+    }
+
+    private void initUI() {
+        Toolbar mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Utente: " + currentUser.getDisplayName());
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.utente) + currentUser.getDisplayName());
 
-        myViewPager = (ViewPager) findViewById(R.id.main_tabs_pager);
-        myTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
+        ViewPager myViewPager = (ViewPager) findViewById(R.id.main_tabs_pager);
+        TabsAccessorAdapter myTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
         myViewPager.setAdapter(myTabsAccessorAdapter);
 
-
-        myTabLayout = (TabLayout) findViewById(R.id.main_tabs);
+        TabLayout myTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         myTabLayout.setupWithViewPager(myViewPager);
+    }
+
+    private void initFirebase() {
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -127,11 +125,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null)
             SendUserToLoginActivity();
-
     }
 
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        super.onAttachFragment(fragment);
-    }
 }

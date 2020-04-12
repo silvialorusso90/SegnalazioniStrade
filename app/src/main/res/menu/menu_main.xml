@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    >
 
     <item
         android:id="@+id/infoItem"
-        android:title="Info"
+        android:title="@string/info"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/profileItem"
-        android:title="Profilo"
+        android:title="@string/profilo"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/segnalationItem"
-        android:title="Segnalazioni"
+        android:title="@string/segnalazioni"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/logoutItem"
-        android:title="Logout"
+        android:title="@string/logout"
         app:showAsAction="never" />
 
 
