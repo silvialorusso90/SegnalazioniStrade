@@ -2,27 +2,39 @@ package com.example.segnalazionistrade.segnalazioni;
 
 public class LocationH {
     private int id;
-    private float longitude, latitude;
-    private String idUser, tipo, indirizzo;
+    private float Longitude;
+    private float Latitude;
+    private String idUser, tipoSegnalazione, indirizzo;
 
     public LocationH() {
     }
 
-    public LocationH(int id, float longitude, float latitude, String idUser, String tipo, String indirizzo) {
+    public LocationH(float longitude, float latitude) {
+        Longitude = longitude;
+        Latitude = latitude;
+    }
+
+    public LocationH(int id, float longitude, float latitude, String idUser, String tipoSegnalazione, String indirizzo) {
         this.id = id;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        Longitude = longitude;
+        Latitude = latitude;
         this.idUser = idUser;
-        this.tipo = tipo;
+        this.tipoSegnalazione = tipoSegnalazione;
         this.indirizzo = indirizzo;
     }
 
-    public LocationH(float longitude, float latitude) {
-        this.longitude = longitude;
-        this.latitude = latitude;
+    public LocationH(int id, float longitude, float latitude) {
+        this.id = id;
+        Longitude = longitude;
+        Latitude = latitude;
     }
 
-    public LocationH(int idTimeMillis, float longitude, float latitude, String idUser) {
+    public LocationH(int id, float longitude, float latitude, String idUser, String tipoSegnalazione) {
+        this.id = id;
+        Longitude = longitude;
+        Latitude = latitude;
+        this.idUser = idUser;
+        this.tipoSegnalazione = tipoSegnalazione;
     }
 
     public int getId() {
@@ -34,19 +46,19 @@ public class LocationH {
     }
 
     public float getLongitude() {
-        return longitude;
+        return Longitude;
     }
 
     public void setLongitude(float longitude) {
-        this.longitude = longitude;
+        Longitude = longitude;
     }
 
     public float getLatitude() {
-        return latitude;
+        return Latitude;
     }
 
     public void setLatitude(float latitude) {
-        this.latitude = latitude;
+        Latitude = latitude;
     }
 
     public String getIdUser() {
@@ -57,12 +69,12 @@ public class LocationH {
         this.idUser = idUser;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getTipoSegnalazione() {
+        return tipoSegnalazione;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoSegnalazione(String tipoSegnalazione) {
+        this.tipoSegnalazione = tipoSegnalazione;
     }
 
     public String getIndirizzo() {

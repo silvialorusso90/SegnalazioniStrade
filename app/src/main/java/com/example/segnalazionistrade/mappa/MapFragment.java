@@ -30,7 +30,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.segnalazionistrade.R;
-import com.example.segnalazionistrade.segnalazioni.LocationHelper;
+import com.example.segnalazionistrade.segnalazioni.LocationH;
+import com.example.segnalazionistrade.segnalazioni.LocationHIncidente;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -58,33 +59,31 @@ import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
-
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
 
-    View mView;
+    private View mView;
     private MapViewModel mapViewModel;
 
     private GoogleMap mMap;
-    LocationManager locationManager;
-    LocationListener locationListener;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
     float latitude, longitude;
     private int zoom = 15;
 
-    ImageButton mVoicebtn;
-    TextToSpeech textToSpeach;
-    String voiceListen;
-    FloatingActionButton fab;
+    private ImageButton mVoicebtn;
+    private TextToSpeech textToSpeach;
+    private String voiceListen;
+    private FloatingActionButton fab;
 
     private String idUser, tipoSegnalazione, gravitaSegnalazione, confermaSegnalazione, locationAddress;
-
-    int idTimeMillis = (int) (System.currentTimeMillis() / 1000);
+    private int idTimeMillis = (int) (System.currentTimeMillis() / 1000);
 
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
-    FirebaseDatabase mDatabase;
-    DatabaseReference myRef;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference myRef;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -199,7 +198,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     //set to textview
                     voiceListen = result.get(0);
 
-                    LocationHelper helper = new LocationHelper(idTimeMillis, latitude, longitude, idUser);
+                    LocationHIncidente helper = new LocationHIncidente(idTimeMillis, latitude, longitude, idUser);
                     myRef = mDatabase.getReference("Segnalazioni");
 
                     myRef.child(String.valueOf(idTimeMillis)).child("id").setValue(idTimeMillis);
@@ -281,8 +280,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             }
                         });
 
-
-                LocationHelper helper = new LocationHelper(longitude, latitude);
+                LocationH helper = new LocationH(longitude, latitude);
 
                 //salva la posizione coorrente
                 mDatabase.getReference("Current Location")
@@ -295,8 +293,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     }
                 });
 
-
-
                 LatLng posizioneutente = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.clear();
                 mMap.addMarker(new MarkerOptions().position(posizioneutente).title("Posizione utente"));
@@ -308,13 +304,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                         for (DataSnapshot child : dataSnapshot.getChildren()) {
                             String key = child.getKey();
-                            LocationHelper helper = child.getValue(LocationHelper.class);
+                            LocationHIncidente helperI = child.getValue(LocationHIncidente.class);
 
 
-                            LatLng incidente = new LatLng(helper.getLatitude(), helper.getLongitude());
+                            LatLng incidente = new LatLng(helperI.getLatitude(), helperI.getLongitude());
                             mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
-                                        helper.getGravita()).icon(BitmapDescriptorFactory
-                                        .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                                    helperI.getGravita()).icon(BitmapDescriptorFactory
+                                    .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
 
                             //.icon(BitmapDescriptorFactory.fromResource(R.drawable.incidente);

@@ -167,7 +167,7 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
     public void inviaSegnalazione(View view) {
         //indirizzo = convertiIndirizzo(latitude, longitude);
-        LocationHelper helper = new LocationHelper(idTimeMillis, longitude, latitude, idUser, gravita, tipo, indirizzo);
+        LocationHIncidente helper = new LocationHIncidente(idTimeMillis, longitude, latitude, idUser, gravita, tipo, indirizzo);
         if (helper.getGravita().isEmpty())
           Toast.makeText(this, "selezionare la gravità", Toast.LENGTH_SHORT).show();
         else {
