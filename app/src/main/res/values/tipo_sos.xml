@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipo_sos">
+        <item></item>
+        <item>Carburante finito</item>
+        <item>Problema alla batteria</item>
+        <item>Gomma bucata</item>
+    </string-array>
+</resources>

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,14 +28,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.util.List;
 
-public class IncidenteActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-    private static final String TAG = "inc";
-
+public class sosActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Spinner spinner;
     private Button btn;
-    private String gravita, sLatitude, sLongitude, indirizzo, idUser, tipo;
-    private TextView lat, lon;
+    private String indirizzo, idUser, tipo, tipoSOS;
     private float latitude, longitude;
     private int idTimeMillis = (int) (System.currentTimeMillis() / 1000);
 
@@ -49,12 +44,11 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_incidente);
+        setContentView(R.layout.activity_sos);
 
         Toolbar mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Segnala un incidente");
-
+        getSupportActionBar().setTitle("Lancia un SOS");
 
         initUI();
 
@@ -64,17 +58,15 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
         idUser = currentUser.getUid();
 
-        tipo = "incidente";
+        tipo = "SOS";
 
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.gravita_incidente, android.R.layout.simple_spinner_dropdown_item);
+                R.array.tipo_sos, android.R.layout.simple_spinner_dropdown_item);
         //creazione dell'adapter per lo spinner
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         //spinner click listener
         spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-
-
 
         //legge la latitudine
         myRef = mDatabase.getReference("Current Location").child("latitude");
@@ -85,16 +77,11 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 latitude = dataSnapshot.getValue(float.class);
-                Integer i = Integer.valueOf((int) (latitude*1000));
-                sLatitude = String.valueOf(i);
-                lat.setText(sLatitude);
-                Log.d(TAG, "Value latitude is: " + latitude);
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 
@@ -107,17 +94,12 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 longitude = dataSnapshot.getValue(float.class);
-                Integer i = Integer.valueOf((int) (longitude*1000));
-                sLongitude = String.valueOf(i);
-                lon.setText(sLongitude);
-                Log.d(TAG, "Value longitude is: " + longitude);
 
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 
@@ -130,40 +112,27 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 indirizzo = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value indirizzo is: " + indirizzo);
-
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 
-
     }
 
-
-
-
     private void initUI() {
-        spinner = (Spinner)findViewById(R.id.spinnerIncidente);
+        spinner = (Spinner)findViewById(R.id.spinnerSOS);
         btn = (Button) findViewById(R.id.btn_invia);
-        lat = (TextView) findViewById(R.id.textView6);
-        lon = (TextView) findViewById(R.id.textView7);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         //prendo il valore dell'elemento dello spinner selezionato
-        gravita = parent.getItemAtPosition(position).toString();
+        tipoSOS = parent.getItemAtPosition(position).toString();
 
-        //visualizzo l'elemento selezionato
-        /*Snackbar.make(view, item, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-         */
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
@@ -172,9 +141,9 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
     public void inviaSegnalazione(View view) {
         //indirizzo = convertiIndirizzo(latitude, longitude);
-        LocationHIncidente helper = new LocationHIncidente(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo, gravita);
-        if (helper.getGravita().isEmpty())
-          Toast.makeText(this, "selezionare la gravità", Toast.LENGTH_SHORT).show();
+        LocationHSos helper = new LocationHSos(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo, tipoSOS);
+        if (helper.getTipoSos().isEmpty())
+            Toast.makeText(this, "selezionare il tipo di SOS", Toast.LENGTH_SHORT).show();
         else {
             myRef = mDatabase.getReference("Segnalazioni");
             myRef.child(String.valueOf(idTimeMillis)).setValue(helper);
@@ -200,6 +169,5 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
         }
         return indirizzo;
     }
-
-
 }
+

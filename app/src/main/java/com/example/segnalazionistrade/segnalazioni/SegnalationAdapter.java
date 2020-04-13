@@ -2,16 +2,22 @@ package com.example.segnalazionistrade.segnalazioni;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.segnalazionistrade.MainActivity;
 import com.example.segnalazionistrade.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,6 +25,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -31,6 +38,8 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
     FirebaseUser currentUser;
     private String idUser;
 
+    private long idS;
+
     //La classe DataSnapshot contiene tipo di dati provenienti da un database firebase alla nostra app
     private ArrayList<DataSnapshot> mDataSnapshot;
 
@@ -41,13 +50,10 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
                 mDataSnapshot.add(dataSnapshot);
                 notifyDataSetChanged();
             }
-
-
         }
 
         @Override
         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
         }
 
         @Override
@@ -88,7 +94,7 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
 
     public class SegnalationViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tipo, gravita, indirizzo;
+        TextView tipo, indirizzo;
 
         ConstraintLayout.LayoutParams params;
 
@@ -96,13 +102,11 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
             super(itemView);
 
             tipo = itemView.findViewById(R.id.txtTipo);
-            gravita = itemView.findViewById(R.id.txtGravita);
             indirizzo = itemView.findViewById(R.id.txtAddress);
 
             params = (ConstraintLayout.LayoutParams) tipo.getLayoutParams();
         }
     }
-
 
 
     @NonNull
@@ -117,28 +121,60 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SegnalationViewHolder holder, int position) {
-        String stipo, sgravita, sindirizzo;
+    public void onBindViewHolder(@NonNull final SegnalationViewHolder holder, int position) {
+        final String stipo, sgravita, sintensita, stipoSOS, sindirizzo, sId;
 
-        double slat, slong;
         //dal database riceviamo il vettore
         DataSnapshot snapshot = mDataSnapshot.get(position);
-        //String sid;
-        //sid = snapshot.child("idUser").getValue(String.class);
 
-        //if (idUser.equals(sid)){
-            stipo = snapshot.child("tipo").getValue(String.class);
-            sgravita = snapshot.child("gravita").getValue(String.class);
-            //slat = snapshot.child("latitude").getValue(double.class);
-            //slong = snapshot.child("longitude").getValue(double.class);
-            //sindirizzo = getLcationAddress(slat, slong);
-            sindirizzo = snapshot.child("indirizzo").getValue(String.class);
+        idS = snapshot.child("id").getValue(Long.class);
+        stipo = snapshot.child("tipo").getValue(String.class);
+        sgravita = snapshot.child("gravita").getValue(String.class);
+        sintensita = snapshot.child("intensita").getValue(String.class);
+        stipoSOS = snapshot.child("tipoSos").getValue(String.class);
+        sindirizzo = snapshot.child("indirizzo").getValue(String.class);
+        sId = String.valueOf(idS);
 
-            holder.tipo.setText(stipo);
-            holder.gravita.setText(sgravita);
+        if (!(sgravita == null)){
+            holder.tipo.setText(stipo + " " + sgravita);
             holder.indirizzo.setText(sindirizzo);
-        //}
+        }
+        else if (!(sintensita == null)){
+            holder.tipo.setText(stipo + " " + sintensita);
+            holder.indirizzo.setText(sindirizzo);
+        }
+        else if (!(stipoSOS == null)){
+            holder.tipo.setText(stipo + " " + stipoSOS);
+            holder.indirizzo.setText(sindirizzo);
+        }
+        else {
+            holder.tipo.setText(stipo);
+            holder.indirizzo.setText(sindirizzo);
+        }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(mActivity, holder.tipo);
+                popupMenu.inflate(R.menu.remove_menu);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        deleteS(sId);
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+    }
+
+    private void deleteS(String sId) {
+        DatabaseReference drSegnalation = FirebaseDatabase.getInstance().getReference("Segnalazioni").child(sId);
+        drSegnalation.removeValue();
+        Toast.makeText(mActivity, "Segnalazione rimossa", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(mActivity, MainActivity.class);
+        mActivity.startActivity(i);
 
     }
 
@@ -147,7 +183,7 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
         return mDataSnapshot.size();
     }
 
-    public void clean(){
+    void clean(){
         mDataBaseRefence.removeEventListener(mListener);
     }
 

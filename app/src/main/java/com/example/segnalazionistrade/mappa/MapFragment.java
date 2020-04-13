@@ -32,6 +32,8 @@ import android.widget.Toast;
 import com.example.segnalazionistrade.R;
 import com.example.segnalazionistrade.segnalazioni.LocationH;
 import com.example.segnalazionistrade.segnalazioni.LocationHIncidente;
+import com.example.segnalazionistrade.segnalazioni.LocationHSos;
+import com.example.segnalazionistrade.segnalazioni.LocationHTraffico;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -305,12 +307,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         for (DataSnapshot child : dataSnapshot.getChildren()) {
                             String key = child.getKey();
                             LocationHIncidente helperI = child.getValue(LocationHIncidente.class);
+                            LocationH helper = child.getValue(LocationH.class);
+                            LocationHTraffico helperT = child.getValue(LocationHTraffico.class);
+                            LocationHSos helperS = child.getValue(LocationHSos.class);
 
+                            LatLng segnalazione = new LatLng(helperI.getLatitude(), helperI.getLongitude());
+                            if (helperI.getTipo().equals("incidente")){
+                                mMap.addMarker(new MarkerOptions().position(segnalazione).title("incidente " +
+                                        helperI.getGravita()).icon(BitmapDescriptorFactory
+                                        .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                            }
+                            else if(helper.getTipo().equals("strada chiusa")){
+                                mMap.addMarker(new MarkerOptions().position(segnalazione).title("strada chiusa ")
+                                        .icon(BitmapDescriptorFactory
+                                        .defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                            }
+                            else if (helperT.getTipo().equals("traffico")){
+                                mMap.addMarker(new MarkerOptions().position(segnalazione).title("traffico " +
+                                        helperT.getIntensita()).icon(BitmapDescriptorFactory
+                                        .defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                            }
+                            else{
+                                mMap.addMarker(new MarkerOptions().position(segnalazione).title("SOS " +
+                                        helperS.getTipoSos()).icon(BitmapDescriptorFactory
+                                        .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
 
-                            LatLng incidente = new LatLng(helperI.getLatitude(), helperI.getLongitude());
-                            mMap.addMarker(new MarkerOptions().position(incidente).title("incidente " +
-                                    helperI.getGravita()).icon(BitmapDescriptorFactory
-                                    .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                            }
+
 
 
                             //.icon(BitmapDescriptorFactory.fromResource(R.drawable.incidente);

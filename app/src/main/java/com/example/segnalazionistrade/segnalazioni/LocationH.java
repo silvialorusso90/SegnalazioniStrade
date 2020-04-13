@@ -4,9 +4,9 @@ public class LocationH {
     private int id;
     private float Longitude;
     private float Latitude;
-    private String idUser, tipoSegnalazione, indirizzo;
+    private String idUser, tipo, indirizzo;
 
-    public LocationH() {
+    LocationH() {
     }
 
     public LocationH(float longitude, float latitude) {
@@ -14,27 +14,27 @@ public class LocationH {
         Latitude = latitude;
     }
 
-    public LocationH(int id, float longitude, float latitude, String idUser, String tipoSegnalazione, String indirizzo) {
+    LocationH(int id, float longitude, float latitude, String idUser, String tipo, String indirizzo) {
         this.id = id;
         Longitude = longitude;
         Latitude = latitude;
         this.idUser = idUser;
-        this.tipoSegnalazione = tipoSegnalazione;
+        this.tipo = tipo;
         this.indirizzo = indirizzo;
     }
 
-    public LocationH(int id, float longitude, float latitude) {
+    LocationH(int id, float longitude, float latitude) {
         this.id = id;
         Longitude = longitude;
         Latitude = latitude;
     }
 
-    public LocationH(int id, float longitude, float latitude, String idUser, String tipoSegnalazione) {
+    LocationH(int id, float longitude, float latitude, String idUser, String tipo) {
         this.id = id;
         Longitude = longitude;
         Latitude = latitude;
         this.idUser = idUser;
-        this.tipoSegnalazione = tipoSegnalazione;
+        this.tipo = tipo;
     }
 
     public int getId() {
@@ -69,12 +69,12 @@ public class LocationH {
         this.idUser = idUser;
     }
 
-    public String getTipoSegnalazione() {
-        return tipoSegnalazione;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoSegnalazione(String tipoSegnalazione) {
-        this.tipoSegnalazione = tipoSegnalazione;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getIndirizzo() {

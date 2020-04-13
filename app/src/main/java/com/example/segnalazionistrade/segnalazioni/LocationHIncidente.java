@@ -10,8 +10,13 @@ public class LocationHIncidente extends LocationH{
         this.gravita = gravita;
     }
 
-    public LocationHIncidente(int id, float longitude, float latitude, String idUser, String tipoSegnalazione, String indirizzo, String gravita) {
-        super(id, longitude, latitude, idUser, tipoSegnalazione, indirizzo);
+    public LocationHIncidente(float longitude, float latitude, String gravita) {
+        super(longitude, latitude);
+        this.gravita = gravita;
+    }
+
+    public LocationHIncidente(int id, float longitude, float latitude, String idUser, String tipo, String indirizzo, String gravita) {
+        super(id, longitude, latitude, idUser, tipo, indirizzo);
         this.gravita = gravita;
     }
 
@@ -20,8 +25,8 @@ public class LocationHIncidente extends LocationH{
         this.gravita = gravita;
     }
 
-    public LocationHIncidente(int id, float longitude, float latitude, String idUser, String tipoSegnalazione, String gravita) {
-        super(id, longitude, latitude, idUser, tipoSegnalazione);
+    public LocationHIncidente(int id, float longitude, float latitude, String idUser, String tipo, String gravita) {
+        super(id, longitude, latitude, idUser, tipo);
         this.gravita = gravita;
     }
 

@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".segnalazioni.IncidenteActivity">
 
+    <include
+        android:id="@+id/main_page_toolbar"
+        layout="@layout/app_bar_layout">
+    </include>
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
@@ -15,22 +20,22 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.122" />
+        app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar"
+        app:layout_constraintVertical_bias="0.183" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerIncidente"
         android:layout_width="186dp"
         android:layout_height="33dp"
         android:entries="@array/gravita_incidente"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.123" />
+        app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar"
+        app:layout_constraintVertical_bias="0.185" />
 
     <Button
         android:id="@+id/btn_invia"
@@ -53,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.377"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerIncidente"
         app:layout_constraintVertical_bias="0.109" />
 
     <TextView
@@ -64,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.345"
         app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerIncidente"
         app:layout_constraintVertical_bias="0.107" />
 
 

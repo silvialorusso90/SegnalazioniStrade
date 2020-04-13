@@ -23,30 +23,25 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 
 public class ChatFragment extends Fragment {
 
-        private ChatsViewModel chatsViewModel;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabaseReference;
 
-        private FirebaseAuth mAuth;
-        private DatabaseReference mDatabaseReference;
+    //UI
+    private EditText mInputText;
 
-        //UI
-        private EditText mInputText;
-        private Button mButtonInvia;
+    private ChatListAdapter chatListAdapter;
+    private RecyclerView rvChatMsg;
 
-        private ChatListAdapter chatListAdapter;
-        private RecyclerView rvChatMsg;
+    private View root;
 
-        View root;
-
-        String currentDate, currentTime;
-
-        public View onCreateView(@NonNull LayoutInflater inflater,
+    public View onCreateView(@NonNull LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
-            chatsViewModel =
-                    ViewModelProviders.of(this).get(ChatsViewModel.class);
+        ChatsViewModel chatsViewModel = ViewModelProviders.of(this).get(ChatsViewModel.class);
             root = getLayoutInflater().inflate(R.layout.fragment_chats, container, false);
 
             mAuth = FirebaseAuth.getInstance();
@@ -62,14 +57,14 @@ public class ChatFragment extends Fragment {
 
             //Creo l'oggetto Adapter
             chatListAdapter = new ChatListAdapter(getActivity(), mDatabaseReference,
-                    mAuth.getCurrentUser().getDisplayName());
+                    Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
             rvChatMsg.setAdapter(chatListAdapter);
             return root;
         }
 
         private void initUI() {
             mInputText = (EditText) root.findViewById(R.id.etMessaggio);
-            mButtonInvia = (Button) root.findViewById(R.id.btnInvia);
+            Button mButtonInvia = (Button) root.findViewById(R.id.btnInvia);
             rvChatMsg = (RecyclerView) root.findViewById(R.id.rv_chat);
 
             //Tasto enter
@@ -95,16 +90,16 @@ public class ChatFragment extends Fragment {
             Calendar calForDate = Calendar.getInstance();
             //SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM, dd, yyyy");
             SimpleDateFormat currentDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            currentDate = currentDateFormat.format(calForDate.getTime());
+            String currentDate = currentDateFormat.format(calForDate.getTime());
 
             Calendar calForTime = Calendar.getInstance();
             SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
-            currentTime = currentTimeFormat.format(calForTime.getTime());
+            String currentTime = currentTimeFormat.format(calForTime.getTime());
             String inputMsg = mInputText.getText().toString();
             if (!inputMsg.equals("")) {
 
                 //Nuovo oggetto di tipo messaggio
-                Message chat = new Message(inputMsg, mAuth.getCurrentUser().getDisplayName(),
+                Message chat = new Message(inputMsg, Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName(),
                         currentDate, currentTime);
 
                 //Salvare il messaggio sul Database cloud

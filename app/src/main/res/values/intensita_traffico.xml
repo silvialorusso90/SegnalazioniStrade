@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="intensita_traffico">
+        <item></item>
+        <item>Lieve</item>
+        <item>Moderato</item>
+        <item>Intenso</item>
+    </string-array>
+</resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.segnalazionistrade">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -20,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".segnalazioni.sosActivity"></activity>
+        <activity android:name=".segnalazioni.trafficoActivity" />
+        <activity android:name=".segnalazioni.StradaCiusaActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -32,6 +33,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity android:name=".autenticazione.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,17 +41,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".segnalazioni.SegnalationActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".segnalazioni.SegnalationActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ProfiloActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".InfoActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".InfoActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".segnalazioni.IncidenteActivity" />
         <activity android:name=".autenticazione.RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
     </application>
 

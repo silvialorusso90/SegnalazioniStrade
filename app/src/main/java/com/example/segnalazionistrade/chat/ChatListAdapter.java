@@ -1,5 +1,6 @@
 package com.example.segnalazionistrade.chat;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
@@ -20,6 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
+
+import static com.example.segnalazionistrade.R.color.colorAccent;
+import static com.example.segnalazionistrade.R.color.colorPrimary;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatViewHolder>{
 
@@ -73,7 +77,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         }
     };
 
-    public ChatListAdapter(Activity activity, DatabaseReference ref, String name){
+    ChatListAdapter(Activity activity, DatabaseReference ref, String name){
         mActivity = activity;
         mDataBaseRefence = ref.child("Chat");
         mDisplayName = name;
@@ -84,16 +88,16 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
 
     }
 
-    public class ChatViewHolder extends RecyclerView.ViewHolder{
+    class ChatViewHolder extends RecyclerView.ViewHolder{
 
         //Variabili membro;
-        TextView autore;
-        TextView messaggio;
-        TextView data;
-        TextView ora;
-        LinearLayout.LayoutParams params;
+        private TextView autore;
+        private TextView messaggio;
+        private TextView data;
+        private TextView ora;
+        private LinearLayout.LayoutParams params;
 
-        public ChatViewHolder(@NonNull View itemView) {
+        ChatViewHolder(@NonNull View itemView) {
             super(itemView);
 
             //Inizializzo elementi ViewHolder
@@ -134,12 +138,15 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
 
     }
 
+    @SuppressLint("ResourceAsColor")
     private void setChatItemStyle(boolean sonoIo, ChatViewHolder holder){
 
         if (sonoIo){
             holder.params.gravity = Gravity.END;
             //holder.autore.setTextColor(Color.BLUE);
             holder.messaggio.setBackgroundResource(R.drawable.in_msg_bg);
+
+
         }
         else {
             holder.params.gravity = Gravity.START;
@@ -157,7 +164,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         return mDataSnapshot.size();
     }
 
-    public void clean(){
+    void clean(){
         mDataBaseRefence.removeEventListener(mListener);
     }
 
