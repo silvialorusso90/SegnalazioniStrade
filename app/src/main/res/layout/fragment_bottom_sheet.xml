@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/LightGrey">
 
     <TextView
         android:id="@+id/txt"
@@ -13,6 +14,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="Inserisci una segnalazione"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,240 +24,194 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <RelativeLayout
-        android:id="@+id/relative"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
+    <ImageView
+        android:id="@+id/imgIncidente"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/incidente" />
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/txtIncidente"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Incidente"
+        android:textSize="18dp"
+        android:textColor="@color/colorPrimary"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgIncidente"
+        app:layout_constraintVertical_bias="0.0" />
 
-            <ImageView
-                android:id="@+id/imgIncidente"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/incidente" />
+    <ImageView
+        android:id="@+id/imgStradaChiusa"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imgIncidente"
+        app:layout_constraintTop_toBottomOf="@+id/txt"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/strada_chiusa" />
 
-            <TextView
-                android:id="@+id/txtIncidente"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imgIncidente"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="Incidente" />
-        </RelativeLayout>
+    <TextView
+        android:id="@+id/txtStradaChiusa"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="strada chiusa"
+        android:textSize="18dp"
+        android:textColor="@color/colorPrimary"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgStradaChiusa"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/relativeLayout">
+    <ImageView
+        android:id="@+id/imgTraffico"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtIncidente"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/traffico" />
 
-            <ImageView
-                android:id="@+id/imgStradaChiusa"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/strada_chiusa" />
+    <TextView
+        android:id="@+id/txtTraffico"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="traffico"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgTraffico"
+        app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:id="@+id/txtStradaChiusa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imgStradaChiusa"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="Strada chiusa" />
-        </RelativeLayout>
+    <ImageView
+        android:id="@+id/imgSos"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imgTraffico"
+        app:layout_constraintTop_toBottomOf="@+id/txtStradaChiusa"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/sos" />
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/relativeLayout2">
-
-            <ImageView
-                android:id="@+id/imgTraffico"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/traffico" />
-
-            <TextView
-                android:id="@+id/txtTraffico"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imgTraffico"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="Traffico" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/relativeLayout3">
-
-            <ImageView
-                android:id="@+id/imgSos"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/sos" />
-
-            <TextView
-                android:id="@+id/txtSos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imgSos"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="SOS" />
-        </RelativeLayout>
-
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/txtSos"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="SOS"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgSos"
+        app:layout_constraintVertical_bias="0.0" />
 
     <!--
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt"
-        app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
-            android:id="@+id/imgIncidente"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            <RelativeLayout
+                android:id="@+id/relativeLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/relativeLayout2">
 
-            android:src="@drawable/incidente" />
+                <ImageView
+                    android:id="@+id/imgTraffico"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/traffico" />
 
-        <TextView
-            android:id="@+id/txtIncidente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imgIncidente"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:text="Incidente" />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/txtTraffico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imgTraffico"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="Traffico" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/relativeLayout"
-        app:layout_constraintTop_toBottomOf="@+id/txt"
-        app:layout_constraintVertical_bias="0.0">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/relativeLayout3">
 
-        <ImageView
-            android:id="@+id/imgStradaChiusa"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/strada_chiusa" />
+                <ImageView
+                    android:id="@+id/imgSos"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/sos" />
 
-        <TextView
-            android:id="@+id/txtStradaChiusa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imgStradaChiusa"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:text="Strada chiusa" />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/txtSos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imgSos"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="SOS" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/relativeLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/txt"
-        app:layout_constraintVertical_bias="0.0">
-
-        <ImageView
-            android:id="@+id/imgTraffico"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/traffico" />
-
-        <TextView
-            android:id="@+id/txtTraffico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imgTraffico"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:text="Traffico" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/relativeLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/txt"
-        app:layout_constraintVertical_bias="0.0">
-
-        <ImageView
-            android:id="@+id/imgSos"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/sos" />
-
-        <TextView
-            android:id="@+id/txtSos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imgSos"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:text="Traffico" />
-    </RelativeLayout>
-    -->
+        </RelativeLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

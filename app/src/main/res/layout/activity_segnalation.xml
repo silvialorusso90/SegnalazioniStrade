@@ -4,12 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/LightGrey"
     tools:context=".segnalazioni.SegnalationActivity">
 
     <include
         android:id="@+id/main_page_toolbar"
-        layout="@layout/app_bar_layout">
-    </include>
+        layout="@layout/app_bar_layout"
+        app:layout_constraintBottom_toTopOf="@+id/rv_segnalazione"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></include>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_segnalazione"

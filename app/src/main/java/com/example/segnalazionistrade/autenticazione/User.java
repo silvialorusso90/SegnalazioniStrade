@@ -8,12 +8,11 @@ public class User {
     public User() {
     }
 
-    public User(String name, String surname, String email) {
+    User(String name, String surname, String email) {
         this.name = name;
         this.surname = surname;
         this.email = email;
     }
-
 
     public String getName() {
         return name;

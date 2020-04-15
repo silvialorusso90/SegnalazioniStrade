@@ -20,8 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "LoginActivity";
-
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
@@ -47,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initFirebase() {
-        // Initialize Firebase Auth
+        // Initializza Firebase Auth
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -81,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void btnLoginClick(View view) {
-        Log.d("LoginActivity", "Login Button Click");
         //estrae le stringhe
         String emailUser = mEmail.getText().toString();
         String passwordUser = mPassword.getText().toString();
@@ -118,7 +115,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // il login ha avuto successo
-                    Log.d(TAG, "signInWithEmail:success");
                     SendUserToMainActivity();
                 } else {
                     // il login è fallito
@@ -132,7 +128,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void btnRegisterClick(View view) {
-        Log.d("LoginActivity", "Registrati Click");
         SendUserToRegisterActivity();
     }
 

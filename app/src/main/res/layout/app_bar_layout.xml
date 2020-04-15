@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.MaterialToolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_app_bar"
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
     android:background="@color/colorPrimary"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    style="@style/Widget.MaterialComponents.Toolbar.Primary"
+    android:elevation="4dp"
+    app:popupTheme="@style/ThemeOverlay.MaterialComponents"
+    app:titleTextAppearance="?attr/textAppearanceHeadline6"
+    >
 
-</androidx.appcompat.widget.Toolbar>
+</com.google.android.material.appbar.MaterialToolbar>
 
-    <!--android:elevation="4dp" -->
+
+    <!--android:elevation="4dp"
+
+    app:popupTheme="@style/ThemeOverlay.MaterialComponents"
+    app:titleTextAppearance="?attr/textAppearanceHeadline6"-->

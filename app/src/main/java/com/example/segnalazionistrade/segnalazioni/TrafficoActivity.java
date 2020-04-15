@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.segnalazionistrade.MainActivity;
@@ -28,10 +27,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.util.List;
 
-public class sosActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class TrafficoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
     private Spinner spinner;
     private Button btn;
-    private String indirizzo, idUser, tipo, tipoSOS;
+    private String indirizzo, idUser, tipo, intensita;
     private float latitude, longitude;
     private int idTimeMillis = (int) (System.currentTimeMillis() / 1000);
 
@@ -44,11 +44,12 @@ public class sosActivity extends AppCompatActivity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sos);
+        setContentView(R.layout.activity_traffico);
 
         Toolbar mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Lancia un SOS");
+        getSupportActionBar().setTitle("Segnala presenza di traffico");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initUI();
 
@@ -58,10 +59,10 @@ public class sosActivity extends AppCompatActivity implements AdapterView.OnItem
 
         idUser = currentUser.getUid();
 
-        tipo = "SOS";
+        tipo = "traffico";
 
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.tipo_sos, android.R.layout.simple_spinner_dropdown_item);
+                R.array.intensita_traffico, android.R.layout.simple_spinner_dropdown_item);
         //creazione dell'adapter per lo spinner
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -123,7 +124,7 @@ public class sosActivity extends AppCompatActivity implements AdapterView.OnItem
     }
 
     private void initUI() {
-        spinner = (Spinner)findViewById(R.id.spinnerSOS);
+        spinner = (Spinner)findViewById(R.id.spinnerTraffico);
         btn = (Button) findViewById(R.id.btn_invia);
     }
 
@@ -131,7 +132,7 @@ public class sosActivity extends AppCompatActivity implements AdapterView.OnItem
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         //prendo il valore dell'elemento dello spinner selezionato
-        tipoSOS = parent.getItemAtPosition(position).toString();
+        intensita = parent.getItemAtPosition(position).toString();
 
     }
 
@@ -141,9 +142,9 @@ public class sosActivity extends AppCompatActivity implements AdapterView.OnItem
 
     public void inviaSegnalazione(View view) {
         //indirizzo = convertiIndirizzo(latitude, longitude);
-        LocationHSos helper = new LocationHSos(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo, tipoSOS);
-        if (helper.getTipoSos().isEmpty())
-            Toast.makeText(this, "selezionare il tipo di SOS", Toast.LENGTH_SHORT).show();
+        LocationHTraffico helper = new LocationHTraffico(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo, intensita);
+        if (helper.getIntensita().equals("Traffico"))
+            Toast.makeText(this, "selezionare l'intensità", Toast.LENGTH_SHORT).show();
         else {
             myRef = mDatabase.getReference("Segnalazioni");
             myRef.child(String.valueOf(idTimeMillis)).setValue(helper);
@@ -170,4 +171,3 @@ public class sosActivity extends AppCompatActivity implements AdapterView.OnItem
         return indirizzo;
     }
 }
-

@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".segnalazioni.IncidenteActivity">
+    tools:context=".segnalazioni.StradaChiusaActivity">
 
     <include
         android:id="@+id/main_page_toolbar"
-        layout="@layout/app_bar_layout"></include>
+        layout="@layout/app_bar_layout">
+    </include>
 
     <ImageView
         android:id="@+id/imageView"
@@ -19,44 +20,11 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/incidente" />
-
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="250dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Selezionare la gravità dell'incidente"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Spinner
-        android:id="@+id/spinnerIncidente"
-        android:layout_width="186dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:entries="@array/gravita_incidente"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar"
+        app:layout_constraintVertical_bias="0.117"
+        app:srcCompat="@drawable/strada_chiusa" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_invia"
@@ -81,6 +49,5 @@
         app:rippleColor="@color/colorAccent"
         app:strokeColor="@color/colorPrimary"
         app:strokeWidth="2dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

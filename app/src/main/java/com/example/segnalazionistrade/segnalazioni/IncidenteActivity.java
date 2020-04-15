@@ -36,7 +36,6 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
     private Spinner spinner;
     private Button btn;
     private String gravita, sLatitude, sLongitude, indirizzo, idUser, tipo;
-    private TextView lat, lon;
     private float latitude, longitude;
     private int idTimeMillis = (int) (System.currentTimeMillis() / 1000);
 
@@ -54,6 +53,8 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
         Toolbar mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Segnala un incidente");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         initUI();
@@ -87,7 +88,6 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
                 latitude = dataSnapshot.getValue(float.class);
                 Integer i = Integer.valueOf((int) (latitude*1000));
                 sLatitude = String.valueOf(i);
-                lat.setText(sLatitude);
                 Log.d(TAG, "Value latitude is: " + latitude);
             }
 
@@ -109,7 +109,6 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
                 longitude = dataSnapshot.getValue(float.class);
                 Integer i = Integer.valueOf((int) (longitude*1000));
                 sLongitude = String.valueOf(i);
-                lon.setText(sLongitude);
                 Log.d(TAG, "Value longitude is: " + longitude);
 
             }
@@ -150,8 +149,6 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
     private void initUI() {
         spinner = (Spinner)findViewById(R.id.spinnerIncidente);
         btn = (Button) findViewById(R.id.btn_invia);
-        lat = (TextView) findViewById(R.id.textView6);
-        lon = (TextView) findViewById(R.id.textView7);
     }
 
     @Override
@@ -173,7 +170,7 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
     public void inviaSegnalazione(View view) {
         //indirizzo = convertiIndirizzo(latitude, longitude);
         LocationHIncidente helper = new LocationHIncidente(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo, gravita);
-        if (helper.getGravita().isEmpty())
+        if (helper.getGravita().equals("Gravità"))
           Toast.makeText(this, "selezionare la gravità", Toast.LENGTH_SHORT).show();
         else {
             myRef = mDatabase.getReference("Segnalazioni");

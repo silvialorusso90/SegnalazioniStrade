@@ -10,4 +10,5 @@
     <color name="colorAccent">#f44335</color> <!-- 500 colore secondario -->
 
     <color name="LightSlateGray">#6D7B8D</color> <!-- grigio per la chat -->
+    <color name="LightGrey">#F5F5F5</color> <!-- grigio per la chat -->
 </resources>

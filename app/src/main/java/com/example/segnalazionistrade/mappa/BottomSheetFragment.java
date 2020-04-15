@@ -10,9 +10,9 @@ import android.widget.ImageView;
 
 import com.example.segnalazionistrade.R;
 import com.example.segnalazionistrade.segnalazioni.IncidenteActivity;
-import com.example.segnalazionistrade.segnalazioni.StradaCiusaActivity;
-import com.example.segnalazionistrade.segnalazioni.sosActivity;
-import com.example.segnalazionistrade.segnalazioni.trafficoActivity;
+import com.example.segnalazionistrade.segnalazioni.StradaChiusaActivity;
+import com.example.segnalazionistrade.segnalazioni.SosActivity;
+import com.example.segnalazionistrade.segnalazioni.TrafficoActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
@@ -27,38 +27,56 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         incidente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), IncidenteActivity.class);
-                startActivity(i);
-
+                SendToIncidenteActivity();
             }
         });
 
         stradaChiusa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), StradaCiusaActivity.class);
-                startActivity(i);
+                SendToStradaCiusaActivity();
             }
         });
+
 
         traffico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), trafficoActivity.class);
-                startActivity(i);
+                SendToTrafficoActivity();
+
             }
         });
 
         sos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), sosActivity.class);
-                startActivity(i);
+                SendToSosActivity();
             }
         });
 
+
         return v;
 
+    }
+
+    private void SendToSosActivity() {
+        Intent i = new Intent(getContext(), SosActivity.class);
+        startActivity(i);
+    }
+
+    private void SendToTrafficoActivity() {
+        Intent i = new Intent(getContext(), TrafficoActivity.class);
+        startActivity(i);
+    }
+
+    private void SendToStradaCiusaActivity() {
+        Intent i = new Intent(getContext(), StradaChiusaActivity.class);
+        startActivity(i);
+    }
+
+    private void SendToIncidenteActivity() {
+        Intent i = new Intent(getContext(), IncidenteActivity.class);
+        startActivity(i);
     }
 
     public BottomSheetFragment() {

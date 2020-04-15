@@ -64,7 +64,7 @@ public class ChatFragment extends Fragment {
 
         private void initUI() {
             mInputText = (EditText) root.findViewById(R.id.etMessaggio);
-            Button mButtonInvia = (Button) root.findViewById(R.id.btnInvia);
+            Button mButtonInvia = (Button) root.findViewById(R.id.btn_invia_m);
             rvChatMsg = (RecyclerView) root.findViewById(R.id.rv_chat);
 
             //Tasto enter

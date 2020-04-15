@@ -144,7 +144,7 @@ public class ProfiloActivity extends AppCompatActivity {
         if (requestCode==GalleryPick  &&  resultCode==RESULT_OK  &&  data!=null) {
             Uri ImageUri = data.getData();
 
-            CropImage.activity()
+            CropImage.activity(ImageUri)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setAspectRatio(1, 1)
                     .start(this);

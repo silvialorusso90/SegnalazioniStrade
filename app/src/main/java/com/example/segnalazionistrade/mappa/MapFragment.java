@@ -65,19 +65,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
 
-    private View mView;
-    private MapViewModel mapViewModel;
-
     private GoogleMap mMap;
     private LocationManager locationManager;
     private LocationListener locationListener;
-    float latitude, longitude;
+    private float latitude, longitude;
     private int zoom = 15;
 
     private ImageButton mVoicebtn;
     private TextToSpeech textToSpeach;
-    private String voiceListen;
-    private FloatingActionButton fab;
 
     private String idUser, tipoSegnalazione, gravitaSegnalazione, confermaSegnalazione, locationAddress;
     private int idTimeMillis = (int) (System.currentTimeMillis() / 1000);
@@ -106,16 +101,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @SuppressLint("RestrictedApi")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mapViewModel =
-                ViewModelProviders.of(this).get(MapViewModel.class);
-        mView = inflater.inflate(R.layout.fragment_map, container, false);
+        MapViewModel mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+        View mView = inflater.inflate(R.layout.fragment_map, container, false);
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        idUser = currentUser.getUid();
-
-        mDatabase = FirebaseDatabase.getInstance();
-        myRef = mDatabase.getReference("Segnalazioni");
+        init();
 
         mVoicebtn = mView.findViewById(R.id.voiceBtn);
 
@@ -123,7 +112,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .findFragmentById(R.id.map1);
         mapFragment.getMapAsync(this);
 
-        fab = (FloatingActionButton) mView.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) mView.findViewById(R.id.fab);
 
         textToSpeach = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -159,20 +148,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mVoicebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                speak();
+                speech();
             }
         });
-
-
 
         return mView;
     }
 
-    private void speak() {
+    private void init() {
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        idUser = currentUser.getUid();
+
+        mDatabase = FirebaseDatabase.getInstance();
+        myRef = mDatabase.getReference("Segnalazioni");
+    }
+
+    private void speech() {
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ITALIAN);
-        //i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Dimmi");
 
         //start intent
         try {
@@ -190,69 +185,66 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode){
-            case REQUEST_CODE_SPEECH_INPUT:{
-                if(resultCode == RESULT_OK && null!=data){
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
+            if (resultCode == RESULT_OK && null != data) {
 
-                    //get text array from voice intent
-                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                //get text array from voice intent
+                ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-                    //set to textview
-                    voiceListen = result.get(0);
+                //set to textview
+                String voiceListen = result.get(0);
 
-                    LocationHIncidente helper = new LocationHIncidente(idTimeMillis, latitude, longitude, idUser);
-                    myRef = mDatabase.getReference("Segnalazioni");
+                LocationHIncidente helper = new LocationHIncidente(idTimeMillis, latitude, longitude, idUser);
+                myRef = mDatabase.getReference("Segnalazioni");
 
-                    myRef.child(String.valueOf(idTimeMillis)).child("id").setValue(idTimeMillis);
-                    myRef.child(String.valueOf(idTimeMillis)).child("latitude").setValue(latitude);
-                    myRef.child(String.valueOf(idTimeMillis)).child("longitude").setValue(longitude);
-                    myRef.child(String.valueOf(idTimeMillis)).child("indirizzo").setValue(locationAddress);
+                myRef.child(String.valueOf(idTimeMillis)).child("id").setValue(idTimeMillis);
+                myRef.child(String.valueOf(idTimeMillis)).child("latitude").setValue(latitude);
+                myRef.child(String.valueOf(idTimeMillis)).child("longitude").setValue(longitude);
+                myRef.child(String.valueOf(idTimeMillis)).child("indirizzo").setValue(locationAddress);
 
 
-                    myRef.child(String.valueOf(idTimeMillis)).child("idUser").setValue(currentUser.getUid());
-                    tipoSegnalazione = voiceListen;
-                    if((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))){
+                myRef.child(String.valueOf(idTimeMillis)).child("idUser").setValue(currentUser.getUid());
+                tipoSegnalazione = voiceListen;
+                if ((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) {
 
-                        myRef.child(String.valueOf(idTimeMillis)).child("tipo").setValue(tipoSegnalazione);
-                        textToSpeach.speak("Inserisci la gravità: lieve, moderata, alta",
-                                TextToSpeech.QUEUE_FLUSH, null);
+                    myRef.child(String.valueOf(idTimeMillis)).child("tipo").setValue(tipoSegnalazione);
+                    textToSpeach.speak("Inserisci la gravità: lieve, moderata, alta",
+                            TextToSpeech.QUEUE_FLUSH, null);
 
-                        mVoicebtn.performClick();
-                    }
-                    gravitaSegnalazione = voiceListen;
-                    if (((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) &&
-                            (gravitaSegnalazione.equals("Lieve")) || (gravitaSegnalazione.equals("lieve"))) {
-                        myRef.child(String.valueOf(idTimeMillis)).child("gravita").setValue(gravitaSegnalazione);
-                        textToSpeach.speak("hai detto lieve, confermi?", TextToSpeech.QUEUE_FLUSH, null);
-                        mVoicebtn.performClick();
-
-                    }
-                    if (((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) &&
-                            (gravitaSegnalazione.equals("Moderata")) || (gravitaSegnalazione.equals("moderata"))) {
-                        myRef.child(String.valueOf(idTimeMillis)).child("gravita").setValue(gravitaSegnalazione);
-                        textToSpeach.speak("hai detto moderata, confermi?", TextToSpeech.QUEUE_FLUSH, null);
-                        mVoicebtn.performClick();
-
-                    }
-                    if (((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) &&
-                            (gravitaSegnalazione.equals("Grave")) || (gravitaSegnalazione.equals("grave"))) {
-                        textToSpeach.speak("hai detto alta, confermi?", TextToSpeech.QUEUE_FLUSH, null);
-                        mVoicebtn.performClick();
-
-                    }
-                    confermaSegnalazione = voiceListen;
-                    if ((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente")) &&
-                            (gravitaSegnalazione.equals("Lieve")) || (gravitaSegnalazione.equals("lieve")) ||
-                            (gravitaSegnalazione.equals("Moderata")) || (gravitaSegnalazione.equals("moderata"))
-                            || (gravitaSegnalazione.equals("Grave")) || (gravitaSegnalazione.equals("grave")) &&
-                            (confermaSegnalazione.equals("Ok")) || (confermaSegnalazione.equals("ok"))) {
-                        textToSpeach.speak("segnalazione inviata", TextToSpeech.QUEUE_FLUSH, null);
-
-                    }
+                    mVoicebtn.performClick();
+                }
+                gravitaSegnalazione = voiceListen;
+                if (((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) &&
+                        (gravitaSegnalazione.equals("Lieve")) || (gravitaSegnalazione.equals("lieve"))) {
+                    myRef.child(String.valueOf(idTimeMillis)).child("gravita").setValue(gravitaSegnalazione);
+                    textToSpeach.speak("hai detto lieve, confermi?", TextToSpeech.QUEUE_FLUSH, null);
+                    mVoicebtn.performClick();
 
                 }
+                if (((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) &&
+                        (gravitaSegnalazione.equals("Moderata")) || (gravitaSegnalazione.equals("moderata"))) {
+                    myRef.child(String.valueOf(idTimeMillis)).child("gravita").setValue(gravitaSegnalazione);
+                    textToSpeach.speak("hai detto moderata, confermi?", TextToSpeech.QUEUE_FLUSH, null);
+                    mVoicebtn.performClick();
+
+                }
+                if (((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) &&
+                        (gravitaSegnalazione.equals("Grave")) || (gravitaSegnalazione.equals("grave"))) {
+                    textToSpeach.speak("hai detto alta, confermi?", TextToSpeech.QUEUE_FLUSH, null);
+                    mVoicebtn.performClick();
+
+                }
+                confermaSegnalazione = voiceListen;
+                if ((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente")) &&
+                        (gravitaSegnalazione.equals("Lieve")) || (gravitaSegnalazione.equals("lieve")) ||
+                        (gravitaSegnalazione.equals("Moderata")) || (gravitaSegnalazione.equals("moderata"))
+                        || (gravitaSegnalazione.equals("Grave")) || (gravitaSegnalazione.equals("grave")) &&
+                        (confermaSegnalazione.equals("Ok")) || (confermaSegnalazione.equals("ok"))) {
+                    textToSpeach.speak("segnalazione inviata", TextToSpeech.QUEUE_FLUSH, null);
+
+                }
+
             }
-            break;
         }
 
     }
@@ -264,7 +256,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         MapsInitializer.initialize(Objects.requireNonNull(getContext()));
         locationManager = (LocationManager) Objects.requireNonNull(getActivity())
                 .getSystemService(Context.LOCATION_SERVICE);
-
 
         locationListener = new LocationListener() {
             @Override
@@ -289,23 +280,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         .setValue(helper).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
-                        //if(task.isSuccessful())
-                        // Toast.makeText(getContext(), "Location saved", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "Location saved", Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 LatLng posizioneutente = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.clear();
                 mMap.addMarker(new MarkerOptions().position(posizioneutente).title("Posizione utente"));
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posizioneutente, zoom));
 
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            String key = child.getKey();
+                            //String key = child.getKey();
                             LocationHIncidente helperI = child.getValue(LocationHIncidente.class);
                             LocationH helper = child.getValue(LocationH.class);
                             LocationHTraffico helperT = child.getValue(LocationHTraffico.class);
@@ -333,8 +321,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                                         .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
 
                             }
-
-
 
                             //.icon(BitmapDescriptorFactory.fromResource(R.drawable.incidente);
                         }

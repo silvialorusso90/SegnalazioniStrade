@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +25,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class StradaCiusaActivity extends AppCompatActivity {
+import java.io.IOException;
+import java.util.List;
 
-    private static final String TAG = "strada_chiusa";
-
+public class SosActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private Spinner spinner;
     private Button btn;
+    private String indirizzo, idUser, tipo, tipoSOS;
     private float latitude, longitude;
-    private String tipo, idUser, indirizzo;
     private int idTimeMillis = (int) (System.currentTimeMillis() / 1000);
 
     private FirebaseDatabase mDatabase;
@@ -39,11 +44,12 @@ public class StradaCiusaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_strada_ciusa);
+        setContentView(R.layout.activity_sos);
 
         Toolbar mToolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Segnala una strada chiusa");
+        getSupportActionBar().setTitle("Lancia un SOS");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initUI();
 
@@ -53,7 +59,15 @@ public class StradaCiusaActivity extends AppCompatActivity {
 
         idUser = currentUser.getUid();
 
-        tipo = "strada chiusa";
+        tipo = "SOS";
+
+        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                R.array.tipo_sos, android.R.layout.simple_spinner_dropdown_item);
+        //creazione dell'adapter per lo spinner
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        //spinner click listener
+        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
         //legge la latitudine
         myRef = mDatabase.getReference("Current Location").child("latitude");
@@ -64,13 +78,11 @@ public class StradaCiusaActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 latitude = dataSnapshot.getValue(float.class);
-                Integer i = Integer.valueOf((int) (latitude*1000));
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 
@@ -83,14 +95,12 @@ public class StradaCiusaActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 longitude = dataSnapshot.getValue(float.class);
-                Integer i = Integer.valueOf((int) (longitude*1000));
 
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 
@@ -103,78 +113,62 @@ public class StradaCiusaActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 indirizzo = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value indirizzo is: " + indirizzo);
-
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
     }
 
     private void initUI() {
-    }
-
-    public void inviaSegnalazione(View view) {
+        spinner = (Spinner)findViewById(R.id.spinnerSOS);
         btn = (Button) findViewById(R.id.btn_invia);
-        LocationH helper = new LocationH(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo);
-        myRef = mDatabase.getReference("Segnalazioni");
-        myRef.child(String.valueOf(idTimeMillis)).setValue(helper);
-
-        Intent i = new Intent(this, MainActivity.class);
-        finish();
-        startActivity(i);
     }
-}
-
-
-/*
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         //prendo il valore dell'elemento dello spinner selezionato
-        gravita = parent.getItemAtPosition(position).toString();
+        tipoSOS = parent.getItemAtPosition(position).toString();
+
     }
 
-public void onNothingSelected(AdapterView<?> arg0) {
-        }
+    public void onNothingSelected(AdapterView<?> arg0) {
+    }
 
 
-public void inviaSegnalazione(View view) {
-
-        LocationHIncidente helper = new LocationHIncidente(idTimeMillis, longitude, latitude, idUser, gravita, tipo, indirizzo);
-        if (helper.getGravita().isEmpty())
-        Toast.makeText(this, "selezionare la gravità", Toast.LENGTH_SHORT).show();
+    public void inviaSegnalazione(View view) {
+        //indirizzo = convertiIndirizzo(latitude, longitude);
+        LocationHSos helper = new LocationHSos(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo, tipoSOS);
+        if (helper.getTipoSos().equals("SOS"))
+            Toast.makeText(this, "selezionare il tipo di SOS", Toast.LENGTH_SHORT).show();
         else {
-        myRef = mDatabase.getReference("Segnalazioni");
-        myRef.child(String.valueOf(idTimeMillis)).setValue(helper);
+            myRef = mDatabase.getReference("Segnalazioni");
+            myRef.child(String.valueOf(idTimeMillis)).setValue(helper);
 
-        Intent i = new Intent(this, MainActivity.class);
-        finish();
-        startActivity(i);
+            Intent i = new Intent(this, MainActivity.class);
+            finish();
+            startActivity(i);
         }
 
-        }
+    }
 
-private String convertiIndirizzo(float latitude, float longitude) {
+    private String convertiIndirizzo(float latitude, float longitude) {
         String indirizzo = "";
         try {
-        Geocoder geocoder = new Geocoder(this);
-        List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
-        Address address = list.get(0);
-        StringBuffer str = new StringBuffer();
-        str.append(list.get(0).getAddressLine(0) + " ");
-        indirizzo = str.toString();
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
+            Address address = list.get(0);
+            StringBuffer str = new StringBuffer();
+            str.append(list.get(0).getAddressLine(0) + " ");
+            indirizzo = str.toString();
         } catch (IOException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
         return indirizzo;
-        }
+    }
+}
 
-
- */

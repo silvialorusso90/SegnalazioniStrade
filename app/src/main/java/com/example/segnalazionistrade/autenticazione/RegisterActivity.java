@@ -30,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
 
     private EditText mName, mSurname, mEmail, mPassword, mPasswordConfirm;
-    private String name, surname, email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -57,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void clickRegister(View view) {
+        String name, surname, email, password;
         name = mName.getText().toString();
         surname = mSurname.getText().toString();
         email = mEmail.getText().toString();
@@ -146,26 +146,17 @@ public class RegisterActivity extends AppCompatActivity {
 
     //il nome deve avere almeno 3 lettere
     private boolean nameCorrect(String nome){
-        if (nome.length() > 2)
-            return true;
-        else
-            return false;
+        return nome.length() > 2;
     }
 
     //il cognome deve avere almeno 4 lettere
     private boolean surnameCorrect(String cognome){
-        if (cognome.length() > 3)
-            return true;
-        else
-            return false;
+        return cognome.length() > 3;
     }
 
     //l'email deve contenere il carattere @
     private boolean emailCorrect(String email){
-        if (email.contains("@") && email.contains("."))
-            return true;
-        else
-            return false;
+        return email.contains("@") && email.contains(".");
     }
 
     //la password deve avere 8 lettere

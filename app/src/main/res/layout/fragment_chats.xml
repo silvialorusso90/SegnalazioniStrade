@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/LightGrey"
     tools:context=".chat.ChatFragment">
 
 
@@ -46,11 +47,25 @@
             android:inputType="textPersonName"
             android:layout_marginRight="@dimen/fab_margin"/>
 
-        <Button
+        <!--<Button
             android:id="@+id/btnInvia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="INVIA" />
+            android:text="INVIA" />-->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_invia_m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="invia"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp"
+            android:textSize="14dp"
+            android:backgroundTint="@color/colorPrimary"
+            app:cornerRadius="10dp"
+            app:rippleColor="@color/colorAccent"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

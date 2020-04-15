@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="64dp"
         android:layout_marginRight="24dp"
@@ -85,7 +85,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -135,39 +135,44 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSettings"
-        android:layout_width="0dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/materialButton"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="64dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginEnd="92dp"
+        android:backgroundTint="@color/colorPrimary"
         android:onClick="btnLoginClick"
         android:text="@string/login_maiuscolo"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="18dp"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="@color/colorAccent"
+        app:strokeColor="@color/colorPrimary"
+        app:strokeWidth="2dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="84dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:text="@string/non_sei_registrato"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSettings"
+        app:layout_constraintTop_toBottomOf="@+id/materialButton"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -175,20 +180,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="84dp"
         android:layout_marginBottom="24dp"
         android:clickable="true"
         android:onClick="btnRegisterClick"
         android:text="@string/registrati"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/btnSettings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialButton"
         app:layout_constraintVertical_bias="0.0" />
 
 
