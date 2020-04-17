@@ -16,13 +16,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="16dp"
             android:layout_weight="1" />
 
         <TextView
@@ -35,6 +36,7 @@
             android:id="@+id/txtOra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="16dp"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -42,6 +44,7 @@
         android:id="@+id/tv_messaggio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="16dp"
         android:padding="10dp"
         android:text="messaggio" />
 </LinearLayout>
