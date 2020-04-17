@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class SosActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -141,8 +143,19 @@ public class SosActivity extends AppCompatActivity implements AdapterView.OnItem
 
 
     public void inviaSegnalazione(View view) {
+
+        Calendar calForDate = Calendar.getInstance();
+        //SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM, dd, yyyy");
+        SimpleDateFormat currentDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String data = currentDateFormat.format(calForDate.getTime());
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
+        String ora = currentTimeFormat.format(calForTime.getTime());
+
         //indirizzo = convertiIndirizzo(latitude, longitude);
-        LocationHSos helper = new LocationHSos(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo, tipoSOS);
+        LocationHSos helper = new LocationHSos(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo,
+                data, ora, tipoSOS);
         if (helper.getTipoSos().equals("SOS"))
             Toast.makeText(this, "selezionare il tipo di SOS", Toast.LENGTH_SHORT).show();
         else {

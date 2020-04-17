@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +35,10 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
     private Activity mActivity;
     private DatabaseReference mDataBaseRefence;
     private String mDisplayName;
-    FirebaseAuth mAuth;
-    FirebaseUser currentUser;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
     private String idUser;
+
 
     private long idS;
 
@@ -94,7 +96,8 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
 
     public class SegnalationViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tipo, indirizzo;
+        TextView tipo, indirizzo, data, ora;
+        ImageView imgTipoSegnalazione;
 
         ConstraintLayout.LayoutParams params;
 
@@ -103,7 +106,9 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
 
             tipo = itemView.findViewById(R.id.txtTipo);
             indirizzo = itemView.findViewById(R.id.txtAddress);
-
+            imgTipoSegnalazione = itemView.findViewById(R.id.imgSegnalazione);
+            data = itemView.findViewById(R.id.txtData);
+            ora = itemView.findViewById(R.id.txtOra);
             params = (ConstraintLayout.LayoutParams) tipo.getLayoutParams();
         }
     }
@@ -122,7 +127,7 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final SegnalationViewHolder holder, int position) {
-        final String stipo, sgravita, sintensita, stipoSOS, sindirizzo, sId;
+        final String stipo, sgravita, sintensita, stipoSOS, sindirizzo, sId, sData, sOra;
 
         //dal database riceviamo il vettore
         DataSnapshot snapshot = mDataSnapshot.get(position);
@@ -133,23 +138,37 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
         sintensita = snapshot.child("intensita").getValue(String.class);
         stipoSOS = snapshot.child("tipoSos").getValue(String.class);
         sindirizzo = snapshot.child("indirizzo").getValue(String.class);
+        sData = snapshot.child("data").getValue(String.class);
+        sOra = snapshot.child("ora").getValue(String.class);
         sId = String.valueOf(idS);
 
         if (!(sgravita == null)){
             holder.tipo.setText(stipo + " " + sgravita);
             holder.indirizzo.setText(sindirizzo);
+            holder.data.setText(sData);
+            holder.ora.setText(sOra);
+            holder.imgTipoSegnalazione.setImageResource(R.drawable.incidente);
         }
         else if (!(sintensita == null)){
             holder.tipo.setText(stipo + " " + sintensita);
             holder.indirizzo.setText(sindirizzo);
+            holder.data.setText(sData);
+            holder.ora.setText(sOra);
+            holder.imgTipoSegnalazione.setImageResource(R.drawable.traffico);
         }
         else if (!(stipoSOS == null)){
             holder.tipo.setText(stipo + " " + stipoSOS);
             holder.indirizzo.setText(sindirizzo);
+            holder.data.setText(sData);
+            holder.ora.setText(sOra);
+            holder.imgTipoSegnalazione.setImageResource(R.drawable.sos);
         }
         else {
             holder.tipo.setText(stipo);
             holder.indirizzo.setText(sindirizzo);
+            holder.data.setText(sData);
+            holder.ora.setText(sOra);
+            holder.imgTipoSegnalazione.setImageResource(R.drawable.strada_chiusa);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

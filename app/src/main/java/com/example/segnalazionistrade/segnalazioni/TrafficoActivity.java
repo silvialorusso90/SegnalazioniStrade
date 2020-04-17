@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class TrafficoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -141,8 +143,19 @@ public class TrafficoActivity extends AppCompatActivity implements AdapterView.O
 
 
     public void inviaSegnalazione(View view) {
+
+        Calendar calForDate = Calendar.getInstance();
+        //SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM, dd, yyyy");
+        SimpleDateFormat currentDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String data = currentDateFormat.format(calForDate.getTime());
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
+        String ora = currentTimeFormat.format(calForTime.getTime());
+
         //indirizzo = convertiIndirizzo(latitude, longitude);
-        LocationHTraffico helper = new LocationHTraffico(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo, intensita);
+        LocationHTraffico helper = new LocationHTraffico(idTimeMillis, longitude, latitude, idUser,
+                tipo, indirizzo, data, ora, intensita);
         if (helper.getIntensita().equals("Traffico"))
             Toast.makeText(this, "selezionare l'intensità", Toast.LENGTH_SHORT).show();
         else {

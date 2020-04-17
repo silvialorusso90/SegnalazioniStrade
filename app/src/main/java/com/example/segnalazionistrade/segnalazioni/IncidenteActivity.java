@@ -27,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class IncidenteActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -168,8 +170,21 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
 
 
     public void inviaSegnalazione(View view) {
+
+        Calendar calForDate = Calendar.getInstance();
+        //SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM, dd, yyyy");
+        SimpleDateFormat currentDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String data = currentDateFormat.format(calForDate.getTime());
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
+        String ora = currentTimeFormat.format(calForTime.getTime());
+
+
+
         //indirizzo = convertiIndirizzo(latitude, longitude);
-        LocationHIncidente helper = new LocationHIncidente(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo, gravita);
+        LocationHIncidente helper = new LocationHIncidente(idTimeMillis, longitude, latitude,
+                idUser, tipo, indirizzo, data, ora, gravita);
         if (helper.getGravita().equals("Gravità"))
           Toast.makeText(this, "selezionare la gravità", Toast.LENGTH_SHORT).show();
         else {

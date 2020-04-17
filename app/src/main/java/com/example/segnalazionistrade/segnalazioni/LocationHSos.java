@@ -23,8 +23,9 @@ public class LocationHSos extends LocationH{
         this.tipoSos = tipoSos;
     }
 
-    public LocationHSos(int id, float longitude, float latitude, String idUser, String tipo, String indirizzo, String tipoSos) {
-        super(id, longitude, latitude, idUser, tipo, indirizzo);
+    public LocationHSos(int id, float longitude, float latitude, String idUser, String tipo,
+                        String indirizzo, String data, String ora, String tipoSos) {
+        super(id, longitude, latitude, idUser, tipo, indirizzo, data, ora);
         this.tipoSos = tipoSos;
     }
 

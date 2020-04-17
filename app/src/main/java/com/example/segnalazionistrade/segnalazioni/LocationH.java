@@ -5,6 +5,7 @@ public class LocationH {
     private float Longitude;
     private float Latitude;
     private String idUser, tipo, indirizzo;
+    private String data, ora;
 
     LocationH() {
     }
@@ -13,6 +14,7 @@ public class LocationH {
         Longitude = longitude;
         Latitude = latitude;
     }
+
 
     LocationH(int id, float longitude, float latitude, String idUser, String tipo, String indirizzo) {
         this.id = id;
@@ -35,6 +37,30 @@ public class LocationH {
         Latitude = latitude;
         this.idUser = idUser;
         this.tipo = tipo;
+    }
+
+    public LocationH(int id, float longitude, float latitude, String idUser, String tipo,
+                     String indirizzo, String data, String ora) {
+        this.id = id;
+        Longitude = longitude;
+        Latitude = latitude;
+        this.idUser = idUser;
+        this.tipo = tipo;
+        this.indirizzo = indirizzo;
+        this.data = data;
+        this.ora = ora;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getOra() {
+        return ora;
+    }
+
+    public void setOra(String ora) {
+        this.ora = ora;
     }
 
     public int getId() {
@@ -83,5 +109,9 @@ public class LocationH {
 
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
+    }
+
+    public String getData() {
+        return data;
     }
 }

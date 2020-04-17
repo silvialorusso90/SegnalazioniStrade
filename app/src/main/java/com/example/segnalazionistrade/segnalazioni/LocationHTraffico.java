@@ -6,17 +6,18 @@ public class LocationHTraffico extends LocationH {
     public LocationHTraffico() {
     }
 
+    public LocationHTraffico(int id, float longitude, float latitude, String idUser, String tipo,
+                             String indirizzo, String data, String ora, String intensita) {
+        super(id, longitude, latitude, idUser, tipo, indirizzo, data, ora);
+        this.intensita = intensita;
+    }
+
     public LocationHTraffico(String intensita) {
         this.intensita = intensita;
     }
 
     public LocationHTraffico(float longitude, float latitude, String intensita) {
         super(longitude, latitude);
-        this.intensita = intensita;
-    }
-
-    public LocationHTraffico(int id, float longitude, float latitude, String idUser, String tipo, String indirizzo, String intensita) {
-        super(id, longitude, latitude, idUser, tipo, indirizzo);
         this.intensita = intensita;
     }
 

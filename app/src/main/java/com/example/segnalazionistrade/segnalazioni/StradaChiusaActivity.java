@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class StradaChiusaActivity extends AppCompatActivity {
 
     private static final String TAG = "strada_chiusa";
@@ -118,8 +121,19 @@ public class StradaChiusaActivity extends AppCompatActivity {
     }
 
     public void inviaSegnalazione(View view) {
+
+        Calendar calForDate = Calendar.getInstance();
+        //SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM, dd, yyyy");
+        SimpleDateFormat currentDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String data = currentDateFormat.format(calForDate.getTime());
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
+        String ora = currentTimeFormat.format(calForTime.getTime());
+
         btn = (Button) findViewById(R.id.btn_invia);
-        LocationH helper = new LocationH(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo);
+        LocationH helper = new LocationH(idTimeMillis, longitude, latitude, idUser, tipo, indirizzo,
+                data, ora);
         myRef = mDatabase.getReference("Segnalazioni");
         myRef.child(String.valueOf(idTimeMillis)).setValue(helper);
 
