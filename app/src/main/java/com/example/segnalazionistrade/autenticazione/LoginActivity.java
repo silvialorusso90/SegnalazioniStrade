@@ -109,15 +109,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(String emailUser, String passwordUser) {
-        mAuth.signInWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(emailUser, passwordUser).addOnCompleteListener
+                (new OnCompleteListener<AuthResult>() {
 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // il login ha avuto successo
+                    // login success
                     SendUserToMainActivity();
                 } else {
-                    // il login è fallito
+                    // login failed
                     Toast.makeText(LoginActivity.this, R.string.login_fallito,
                             Toast.LENGTH_SHORT).show();
                 }

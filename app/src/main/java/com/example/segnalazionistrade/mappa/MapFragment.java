@@ -89,7 +89,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-            //aggiorna continuamente la posizione dell'utente
+            //constantly updates the user's location
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.
                     ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
@@ -172,7 +172,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //start intent
         try {
             //no error
-            //show dialog
             startActivityForResult(i, REQUEST_CODE_SPEECH_INPUT);
 
         }catch (Exception e){
@@ -219,7 +218,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     myRef.child(String.valueOf(idTimeMillis)).child("gravita").setValue(gravitaSegnalazione);
                     textToSpeach.speak("hai detto lieve, confermi?", TextToSpeech.QUEUE_FLUSH, null);
                     mVoicebtn.performClick();
-
                 }
                 if (((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente"))) &&
                         (gravitaSegnalazione.equals("Moderata")) || (gravitaSegnalazione.equals("moderata"))) {
@@ -232,7 +230,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         (gravitaSegnalazione.equals("Grave")) || (gravitaSegnalazione.equals("grave"))) {
                     textToSpeach.speak("hai detto alta, confermi?", TextToSpeech.QUEUE_FLUSH, null);
                     mVoicebtn.performClick();
-
                 }
                 confermaSegnalazione = voiceListen;
                 if ((tipoSegnalazione.equals("Incidente")) || (tipoSegnalazione.equals("incidente")) &&
@@ -241,12 +238,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         || (gravitaSegnalazione.equals("Grave")) || (gravitaSegnalazione.equals("grave")) &&
                         (confermaSegnalazione.equals("Ok")) || (confermaSegnalazione.equals("ok"))) {
                     textToSpeach.speak("segnalazione inviata", TextToSpeech.QUEUE_FLUSH, null);
-
                 }
-
             }
         }
-
     }
 
     @Override
@@ -265,7 +259,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 locationAddress = getLcationAddress();
 
-                //salva l'indirizzoo testuale
+                //save locationaddress
                 mDatabase.getReference("Indirizzo corrente").setValue(locationAddress)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -275,12 +269,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 LocationH helper = new LocationH(longitude, latitude);
 
-                //salva la posizione coorrente
+                //save location
                 mDatabase.getReference("Current Location")
                         .setValue(helper).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        //Toast.makeText(getContext(), "Location saved", Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -293,7 +287,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            //String key = child.getKey();
                             LocationHIncidente helperI = child.getValue(LocationHIncidente.class);
                             LocationH helper = child.getValue(LocationH.class);
                             LocationHTraffico helperT = child.getValue(LocationHTraffico.class);
@@ -319,10 +312,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                                 mMap.addMarker(new MarkerOptions().position(segnalazione).title("SOS " +
                                         helperS.getTipoSos()).icon(BitmapDescriptorFactory
                                         .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-
                             }
-
-                            //.icon(BitmapDescriptorFactory.fromResource(R.drawable.incidente);
                         }
                     }
 

@@ -9,13 +9,5 @@
     style="@style/Widget.MaterialComponents.Toolbar.Primary"
     android:elevation="4dp"
     app:popupTheme="@style/ThemeOverlay.MaterialComponents"
-    app:titleTextAppearance="?attr/textAppearanceHeadline6"
-    >
-
+    app:titleTextAppearance="?attr/textAppearanceHeadline6">
 </com.google.android.material.appbar.MaterialToolbar>
-
-
-    <!--android:elevation="4dp"
-
-    app:popupTheme="@style/ThemeOverlay.MaterialComponents"
-    app:titleTextAppearance="?attr/textAppearanceHeadline6"-->

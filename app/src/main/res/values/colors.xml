@@ -7,6 +7,9 @@
     <color name="colorSecondary">#e91e63</color>
     <color name="colorAccent">#e91e63</color>
 
-    <color name="LightSlateGray">#6D7B8D</color> <!-- grigio per la chat -->
+    <color name="LightSlateGray">#90a4ae</color> <!-- grigio per la chat -->
     <color name="LightGrey">#F5F5F5</color> <!-- grigio per la chat -->
+    <color name="White">#FFFFFF</color>
+
+    <color name="sendere_chat">#5c6bc0</color>
 </resources>

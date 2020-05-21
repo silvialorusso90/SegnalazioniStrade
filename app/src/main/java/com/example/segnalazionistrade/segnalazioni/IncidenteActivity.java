@@ -172,7 +172,6 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
     public void inviaSegnalazione(View view) {
 
         Calendar calForDate = Calendar.getInstance();
-        //SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM, dd, yyyy");
         SimpleDateFormat currentDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String data = currentDateFormat.format(calForDate.getTime());
 
@@ -180,22 +179,18 @@ public class IncidenteActivity extends AppCompatActivity implements AdapterView.
         SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
         String ora = currentTimeFormat.format(calForTime.getTime());
 
-
-
-        //indirizzo = convertiIndirizzo(latitude, longitude);
         LocationHIncidente helper = new LocationHIncidente(idTimeMillis, longitude, latitude,
                 idUser, tipo, indirizzo, data, ora, gravita);
         if (helper.getGravita().equals("Gravità"))
           Toast.makeText(this, "selezionare la gravità", Toast.LENGTH_SHORT).show();
         else {
-            myRef = mDatabase.getReference("Segnalazioni");
+            DatabaseReference myRef = mDatabase.getReference("Segnalazioni");
             myRef.child(String.valueOf(idTimeMillis)).setValue(helper);
 
             Intent i = new Intent(this, MainActivity.class);
             finish();
             startActivity(i);
         }
-
     }
 
     private String convertiIndirizzo(float latitude, float longitude) {

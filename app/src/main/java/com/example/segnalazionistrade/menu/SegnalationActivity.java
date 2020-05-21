@@ -1,4 +1,4 @@
-package com.example.segnalazionistrade.segnalazioni;
+package com.example.segnalazionistrade.menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;

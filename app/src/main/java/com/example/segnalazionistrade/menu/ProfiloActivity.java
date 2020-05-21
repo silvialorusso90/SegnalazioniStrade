@@ -1,20 +1,19 @@
-package com.example.segnalazionistrade;
+package com.example.segnalazionistrade.menu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.segnalazionistrade.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -154,17 +153,12 @@ public class ProfiloActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
             if (resultCode == RESULT_OK) {
-                /*loadingBar.setTitle("Set Profile Image");
-                loadingBar.setMessage("Please wait, your profile image is updating...");
-                loadingBar.setCanceledOnTouchOutside(false);
-                loadingBar.show();
-
-                 */
 
                 final Uri resultUri = result.getUri();
                 final StorageReference filePath = profileImageRef.child(currentUserID + ".jpg");
 
-                filePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                filePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.
+                        TaskSnapshot>() {
 
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -175,29 +169,29 @@ public class ProfiloActivity extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 final String downloadUrl = uri.toString();
                                 databaseRef.child("Utenti").child(currentUserID).child("foto")
-                                        .setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        .setValue(downloadUrl).addOnCompleteListener
+                                        (new OnCompleteListener<Void>() {
 
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(ProfiloActivity.this, "Profile image stored to firebase database successfully.", Toast.LENGTH_SHORT).show();
-                                            //loadingBar.dismiss();
+                                            Toast.makeText(ProfiloActivity.this,
+                                        "Profile image stored to firebase database successfully.",
+                                                    Toast.LENGTH_SHORT).show();
                                         }
                                         else {
                                             String message = task.getException().getMessage();
-                                            Toast.makeText(ProfiloActivity.this, "Error Occurred..." + message, Toast.LENGTH_SHORT).show();
-                                            //loadingBar.dismiss();
+                                            Toast.makeText(ProfiloActivity.this,
+                                                    "Error Occurred..." + message,
+                                                    Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                             }
                         });
-
-
                     }
                 });
-
             }
         }
     }

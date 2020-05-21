@@ -323,7 +323,7 @@
         android:layout_marginEnd="92dp"
         android:backgroundTint="@color/colorPrimary"
         android:onClick="clickRegister"
-        android:text="@string/registrati_maiuscolo"
+        android:text="Registrazione"
         android:textSize="18dp"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

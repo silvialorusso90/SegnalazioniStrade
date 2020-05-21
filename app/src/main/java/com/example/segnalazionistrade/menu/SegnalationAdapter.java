@@ -1,4 +1,4 @@
-package com.example.segnalazionistrade.segnalazioni;
+package com.example.segnalazionistrade.menu;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -95,10 +94,8 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
 
 
     public class SegnalationViewHolder extends RecyclerView.ViewHolder{
-
         TextView tipo, indirizzo, data, ora;
         ImageView imgTipoSegnalazione;
-
         ConstraintLayout.LayoutParams params;
 
         public SegnalationViewHolder(@NonNull View itemView) {
@@ -113,15 +110,13 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
         }
     }
 
-
     @NonNull
     @Override
     public SegnalationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        LayoutInflater inflater = (LayoutInflater)mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater)mActivity.getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.segnalazione, parent, false);
         SegnalationViewHolder viewHolder = new SegnalationViewHolder(v);
-
         return viewHolder;
     }
 
@@ -129,7 +124,7 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
     public void onBindViewHolder(@NonNull final SegnalationViewHolder holder, int position) {
         final String stipo, sgravita, sintensita, stipoSOS, sindirizzo, sId, sData, sOra;
 
-        //dal database riceviamo il vettore
+        //receive the vector from database
         DataSnapshot snapshot = mDataSnapshot.get(position);
 
         idS = snapshot.child("id").getValue(Long.class);
@@ -189,7 +184,8 @@ public class SegnalationAdapter extends RecyclerView.Adapter<SegnalationAdapter.
     }
 
     private void deleteS(String sId) {
-        DatabaseReference drSegnalation = FirebaseDatabase.getInstance().getReference("Segnalazioni").child(sId);
+        DatabaseReference drSegnalation = FirebaseDatabase.getInstance().
+                getReference("Segnalazioni").child(sId);
         drSegnalation.removeValue();
         Toast.makeText(mActivity, "Segnalazione rimossa", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(mActivity, MainActivity.class);

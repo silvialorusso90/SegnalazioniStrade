@@ -168,7 +168,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/non_sei_registrato"
+        android:text="Non sono registrato"
         android:textSize="18dp"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"

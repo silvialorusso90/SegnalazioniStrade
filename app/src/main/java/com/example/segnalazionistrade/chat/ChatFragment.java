@@ -88,7 +88,6 @@ public class ChatFragment extends Fragment {
         private void inviaMessaggio() {
 
             Calendar calForDate = Calendar.getInstance();
-            //SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM, dd, yyyy");
             SimpleDateFormat currentDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String currentDate = currentDateFormat.format(calForDate.getTime());
 
@@ -98,13 +97,13 @@ public class ChatFragment extends Fragment {
             String inputMsg = mInputText.getText().toString();
             if (!inputMsg.equals("")) {
 
-                //Nuovo oggetto di tipo messaggio
-                Message chat = new Message(inputMsg, Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName(),
+                //New message
+                Message chat = new Message(inputMsg, Objects.requireNonNull(mAuth.getCurrentUser())
+                        .getDisplayName(),
                         currentDate, currentTime);
 
-                //Salvare il messaggio sul Database cloud
+                //Save the message
                 mDatabaseReference.child("Chat").push().setValue(chat);
-
                 mInputText.setText("");
             }
         }

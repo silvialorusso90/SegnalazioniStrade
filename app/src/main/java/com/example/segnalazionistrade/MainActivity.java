@@ -10,10 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.segnalazionistrade.autenticazione.LoginActivity;
-import com.example.segnalazionistrade.segnalazioni.SegnalationActivity;
+import com.example.segnalazionistrade.menu.InfoActivity;
+import com.example.segnalazionistrade.menu.ProfiloActivity;
+import com.example.segnalazionistrade.menu.SegnalationActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

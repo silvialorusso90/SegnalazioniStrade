@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/txtSpazio"
-            android:layout_width="16dp"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
@@ -44,7 +44,7 @@
         android:id="@+id/tv_messaggio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
+        android:textSize="18dp"
         android:padding="10dp"
         android:text="messaggio" />
 </LinearLayout>

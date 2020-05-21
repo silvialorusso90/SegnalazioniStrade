@@ -1,9 +1,11 @@
-package com.example.segnalazionistrade;
+package com.example.segnalazionistrade.menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+
+import com.example.segnalazionistrade.R;
 
 public class InfoActivity extends AppCompatActivity {
 
